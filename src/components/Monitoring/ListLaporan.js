@@ -4,7 +4,7 @@ function ListLaporan() {
   return (
     <div>
         <div className='w-full h-40 bg-white flex justify-between rounded-xl items-center p-4 space-x-5 relative'>
-            <figure className='w-full h-full bg-gray-500'>
+            <figure className='w-full h-full'>
                 <img src='https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60' className='w-full h-full object-cover rounded-lg' />
             </figure>
             <div className='w-full flex-col space-y-4'>
