@@ -20,6 +20,14 @@ function Laporan() {
             <div onClick={()=>setfilter('laporan1')} className={`text-sm ${(filter==='laporan1')?'text-hoveRed bg-[#F4DFE1] border border-hoveRed':'text-black'} hover:text-hoveRed hover:bg-[#F4DFE1] rounded-lg px-4 py-2 cursor-pointer`}>Laporan1</div>
             <div onClick={()=>setfilter('laporan2')} className={`text-sm ${(filter==='laporan2')?'text-hoveRed bg-[#F4DFE1] border border-hoveRed':'text-black'} hover:text-hoveRed hover:bg-[#F4DFE1] rounded-lg px-4 py-2 cursor-pointer`}>Laporan2</div>
           </div>
+          <div className='flex justify-center items-center border border-gray-400 rounded-md px-4'>
+            <select className='w-full outline-none bg-transparent text-black'>
+              <option value='' className='w-full'>Status</option>
+              <option value='telah dilaksanakan' className='w-full'>Telah Dilaksanakan</option>
+              <option value='proses' className='w-full'>Proses</option>
+              <option value='perlu diperhatikan' className='w-full'>Perlu Diperhatikan</option>
+            </select>
+          </div>
           <div className='flex justify-center items-center border border-gray-400 rounded-md px-2 space-x-1'>
             <SearchIcon className='text-gray-400 w-6 h-6' />
             <input type="text" placeholder='Search...' className='w-full outline-none bg-transparent' />

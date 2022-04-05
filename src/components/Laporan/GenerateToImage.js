@@ -21,7 +21,7 @@ function GenerateToImage({handleGenerateImg,generateimg}) {
       <img src={tmp} className="w-full hfull"/>
       <div className='w-[668px] h-[42rem] self-center absolute left-0 top-0 ml-[60px] mt-[154px] flex'>
         <img src={puppy} className="w-full h-full absolute  rounded-lg" />
-        <div className='text-4xl bg-transparent backdrop-blur-md text-white z-20 w-fit h-fit absolute bottom-4'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate</div>
+        <div className='text-4xl bg-white px-1  text-[#000] w-fit h-fit absolute bottom-1 left-1'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate</div>
       </div>
     </div>
   )
