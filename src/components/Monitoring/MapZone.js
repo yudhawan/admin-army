@@ -11,10 +11,14 @@ function MapZone({long,lat,fullmap}) {
   useEffect(()=>{
     const map = new mapboxgl.Map({
       container: mapRef.current,
-      style: 'mapbox://styles/mapbox/streets-v11',
+      style: 'mapbox://styles/yudhawan/cl1lswt4t005614o985bzh2ug',
       center: [longitude, latitude],
       zoom: 12
     });
+    map.on('load', () => {
+      map.resize()
+      setmap(map)
+    })
     // add marker
     const marker = new mapboxgl.Marker().setLngLat([longitude, latitude]).addTo(map);
     fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?types=locality&types=place&access_token=${MAPBOX_TOKEN}`)
