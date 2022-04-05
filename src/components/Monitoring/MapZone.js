@@ -1,25 +1,29 @@
 import { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
-mapboxgl.accessToken='pk.eyJ1IjoieXVkaGF3YW4iLCJhIjoiY2wxa2cxZ3h2MDBnNDNqangzaHFuNXpwNyJ9.-NB1Dw2GlDb11fnUD3ZQng'
-function MapZone({long,lat}) {
-  const [longitude, setLongitude] = useState(112.6108442);
+
+let MAPBOX_TOKEN = "pk.eyJ1IjoieXVkaGF3YW4iLCJhIjoiY2wxa2cxZ3h2MDBnNDNqangzaHFuNXpwNyJ9.-NB1Dw2GlDb11fnUD3ZQng"
+mapboxgl.accessToken=MAPBOX_TOKEN
+function MapZone({long,lat,fullmap}) {
+  const [map,setmap]=useState(null)
   const [latitude, setLatitude] = useState(-7.9730079);
+  const [longitude, setLongitude] = useState(112.6108442);
   const mapRef = useRef(null)
   useEffect(()=>{
     const map = new mapboxgl.Map({
       container: mapRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [longitude, latitude],
-      zoom: 10
+      zoom: 12
     });
     // add marker
     const marker = new mapboxgl.Marker().setLngLat([longitude, latitude]).addTo(map);
-  },[])
-  return (
-    <div>
-      <div className='w-96 h-96 rounded-lg' ref={mapRef} />
-    </div>
-  )
+    fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?types=locality&types=place&access_token=${MAPBOX_TOKEN}`)
+    .then(res=>res.json())
+    .then(data=> console.log(data))
+  },[long,lat,fullmap])
+  return <div className={`${fullmap?'w-[70vw] h-[80vh]':'w-96 h-96'} rounded-lg`} ref={mapRef} />
+    
+  
 }
 // mapbox://styles/mapbox/streets-v11
 // mapbox://styles/yudhawan/cl1kgyiqz001914qktkm84tb8

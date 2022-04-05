@@ -1,8 +1,9 @@
-import {SearchIcon,AdjustmentsIcon} from '@heroicons/react/outline'
+import {SearchIcon,AdjustmentsIcon,ArrowsExpandIcon} from '@heroicons/react/outline'
 import React, { useEffect, useState } from 'react'
 import ListLaporan from '../components/Monitoring/ListLaporan'
 import MapZone from '../components/Monitoring/MapZone'
 function Monitoring() {
+  const [fullmap,setfullmap] = useState(false)
   const [filter,setfilter]=useState({
     time:null,
     laporan:''
@@ -10,7 +11,7 @@ function Monitoring() {
   const [showfilter,setshowfilter]=useState(false)
   return (
     <div className='flex w-full justify-between space-x-6'>
-      <div className='w-full h-auto flex flex-col space-y-5'>
+      <div className={`w-full h-auto flex flex-col space-y-5 ${fullmap?'hidden':'block'}`}>
         <div className='flex bg-white rounded-lg space-x-2 p-2 px-3 items-center relative'>
           <SearchIcon className='text-gray-500 w-5 h-5' />
           <input type='text' className='outline-none w-full' placeholder='Search...' />
@@ -33,10 +34,11 @@ function Monitoring() {
         </div>
         <ListLaporan filter={filter} />
       </div>
-      <div className='flex'>
-        <div>
-          <MapZone long={null} lat={null}/>
+      <div className='flex relative'>
+        <div className='w-full h-full' >
+          <MapZone long={null} lat={null} fullmap={fullmap} />
         </div>
+        <ArrowsExpandIcon onClick={()=>setfullmap(!fullmap)} className='w-8 h-8 text-gray-500 absolute top-1 right-1 cursor-pointer'/>
       </div>
     </div>
   )
