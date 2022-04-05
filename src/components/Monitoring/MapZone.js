@@ -8,7 +8,7 @@ function MapZone({long,lat}) {
   useEffect(()=>{
     const map = new mapboxgl.Map({
       container: mapRef.current,
-      style: 'mapbox://styles/yudhawan/cl1kgyiqz001914qktkm84tb8',
+      style: 'mapbox://styles/mapbox/streets-v11',
       center: [longitude, latitude],
       zoom: 10
     });
@@ -21,5 +21,6 @@ function MapZone({long,lat}) {
     </div>
   )
 }
-
+// mapbox://styles/mapbox/streets-v11
+// mapbox://styles/yudhawan/cl1kgyiqz001914qktkm84tb8
 export default MapZone
