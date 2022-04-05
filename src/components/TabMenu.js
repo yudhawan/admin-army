@@ -34,7 +34,7 @@ function TabMenu() {
                 </div>
             </div>
         </div>
-        <div className='lg:hidden bg-[#f8f8fa] w-full fixed bottom-0 left-0 h-16 flex space-x-7 justify-center items-center'>
+        <div className='lg:hidden bg-[#f8f8fa] w-full fixed bottom-0 left-0 h-16 flex space-x-7 justify-center items-center z-20'>
             <div className={`flex flex-col space-y-1 cursor-pointer justify-start items-center`} onClick={()=> navigate('/')}>
                 <HomeIcon className={`w-8 h-8 ${(pathname==='/')?'text-[#db5454]':'text-gray-500'} text-gray-500`}/>
                 {/* <div className={`${(pathname==='/')?'text-[#db5454]':'text-black'} text-xs`}>Dashboard</div> */}
