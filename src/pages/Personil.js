@@ -1,4 +1,4 @@
-import {PlusIcon,SearchIcon,TrashIcon,PencilIcon, DotsVerticalIcon,PhoneIcon, BriefcaseIcon,MailIcon} from '@heroicons/react/outline'
+import {PlusIcon,SearchIcon,TrashIcon,PencilIcon, DotsVerticalIcon,PhoneIcon, BriefcaseIcon,MailIcon,ShieldCheckIcon, FireIcon} from '@heroicons/react/outline'
 import { useEffect, useState } from 'react'
 import AddPersonil from '../components/Personil/AddPersonil'
 import EditPersonil from '../components/Personil/EditPersonil'
@@ -45,18 +45,18 @@ function Personil() {
             <div className='flex-col space-y-2'>
               <div className='w-14 h-14 rounded-xl bg-gray-300'></div>
               <div className='text-black text-sm font-semibold font-poppins line-clamp-1'>Ahmad Lefler Samawi</div>
-              <div className='text-gray-400 text-xs'>Chief Tactical SUpervisor</div>
+              <div className='text-gray-400 text-xs flex items-center'> <ShieldCheckIcon className='w-5 h-5'/> Chief Tactical SUpervisor</div>
               <div className='flex space-x-1'>
                 <BriefcaseIcon className='w-4 h-4 text-red'/>
-                <p className='text-xs text-black line-clamp-1'>Highspeed Studio</p>
+                <p className='text-xs text-black line-clamp-1'>Jabatan</p>
               </div>
               <div className='flex space-x-1'>
                 <PhoneIcon className='w-4 h-4 text-red'/>
                 <p className='text-xs text-black line-clamp-1'>085123455323</p>
               </div>
               <div className='flex space-x-1'>
-                <MailIcon className='w-4 h-4 text-red'/>
-                <p className='text-xs text-black line-clamp-1'>ahmadlf@mail.com</p>
+                <FireIcon className='w-4 h-4 text-red'/>
+                <p className='text-xs text-black line-clamp-1'>Satuan</p>
               </div>
             </div>
             <div className='flex-flex-col pt-4 relative'>

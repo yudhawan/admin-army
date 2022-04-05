@@ -9,7 +9,7 @@ function Monitoring() {
   })
   const [showfilter,setshowfilter]=useState(false)
   return (
-    <div className='flex w-[40vw]'>
+    <div className='flex w-full justify-between space-x-6'>
       <div className='w-full h-auto flex flex-col space-y-5'>
         <div className='flex bg-white rounded-lg space-x-2 p-2 px-3 items-center relative'>
           <SearchIcon className='text-gray-500 w-5 h-5' />
@@ -33,7 +33,7 @@ function Monitoring() {
         </div>
         <ListLaporan filter={filter} />
       </div>
-      <div className='absolute right-5'>
+      <div className='flex'>
         <div>
           <MapZone long={null} lat={null}/>
         </div>

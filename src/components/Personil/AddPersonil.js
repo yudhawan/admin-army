@@ -157,6 +157,7 @@ function AddPersonil({handleAddshow}) {
                         <option value="">--/--</option>
                         <option value="DARAT">DARAT</option>
                         <option value="LAUT">LAUT</option>
+                        <option value="UDARA">UDARA</option>
                     </select>
                 </div>
             </div>
