@@ -1,13 +1,50 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
-export const getUsers = createAsyncThunk("users/getUsers", async ()=>{
-    return null
+import axios from "axios";
+export const getUsers = createAsyncThunk("users/getUsers", async (arg,{getState})=>{
+    const currentToken = getState().auth.token;
+    const result = await axios({
+        method: "GET",
+        url: "http://127.0.0.1:4000/admin/users",
+        headers:{
+            'authorization': `Bearer ${currentToken}`,
+        }
+    })
+    return result.data
 })
-export const postUsers = createAsyncThunk("users/postUsers", async (data)=>{
-    return null
+export const postUsers = createAsyncThunk("users/postUsers", async (data,{getState,dispatch})=>{
+    const currentToken = getState().auth.token;
+    let form = new FormData()
+    form.append('users',JSON.stringify({
+        nama:data.nama,
+        email:data.email,
+        nohp:data.nohp,
+        password:data.password,
+    }))
+    form.append('images',data.picture)
+    const result = await axios({
+        method: "POST",
+        url: "http://127.0.0.1:4000/admin/users",
+        headers:{
+            'authorization': `Bearer ${currentToken}`,
+        },
+        data: form
+    })
+    dispatch(getUsers())
+    return result.data
 })
-export const deleteUsers = createAsyncThunk("users/deleteUsers", async (data)=>{
-    return null
+export const deleteUsers = createAsyncThunk("users/deleteUsers", async (data,{getState,dispatch})=>{
+    const currentToken = getState().auth.token;
+    await axios({
+        method: "DELETE",
+        url: 'http://127.0.0.1:4000/admin/users',
+        headers:{
+            'authorization': `Bearer ${currentToken}`,
+        },
+        data: {
+            id:data
+        }
+    })
+    dispatch(getUsers())
 })
 export const updateUsers = createAsyncThunk("users/updateUsers", async (data)=>{
     return null
@@ -17,11 +54,17 @@ const usersSlice = createSlice({
     name: "users",  
     initialState:{
         users: [],
+        status:null,
         loading: false,
         error: null,
     },
+    reducers:{
+        clearStatus: (state)=> {
+            state.status = null
+        },
+    },
     extraReducers: {
-        [getUsers.pending]: (state, action) => {
+        [getUsers.pending]: (state) => {
             state.loading = true;
         },
         [getUsers.fulfilled]: (state, action) => {
@@ -32,18 +75,18 @@ const usersSlice = createSlice({
             state.loading = false;
             state.error = action.error.message;
         },
-        [postUsers.pending]: (state, action) => {
+        [postUsers.pending]: (state) => {
             state.loading = true;
         },
         [postUsers.fulfilled]: (state, action) => {
             state.loading = false;
-            state.users = action.payload;
+            state.status = action.payload.status;
         },
         [postUsers.rejected]: (state, action) => {
             state.loading = false;
             state.error = action.error.message;
         },
-        [deleteUsers.pending]: (state, action) => {
+        [deleteUsers.pending]: (state) => {
             state.loading = true;
         },
         [deleteUsers.fulfilled]: (state, action) => {
@@ -54,10 +97,10 @@ const usersSlice = createSlice({
             state.loading = false;
             state.error = action.error.message;
         },
-        [updateUsers.pending]: (state, action) => {
+        [updateUsers.pending]: (state) => {
             state.loading = true;
         },
     }
 })
-
+export const {clearStatus} = usersSlice.actions
 export default usersSlice.reducer

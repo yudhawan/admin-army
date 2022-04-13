@@ -1,10 +1,18 @@
 import {BellIcon,SearchIcon} from '@heroicons/react/outline'
+import { useEffect, useState } from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
+import {logout} from '../features/authSlice'
+import {useDispatch} from 'react-redux'
 function Header() {
+    const dispatch = useDispatch()
     const {pathname} = useLocation()
+    const [showmenu,setshowmenu]=useState(false)
+    useEffect(()=>{
+        if(pathname=='/')setshowmenu(false)
+    },[pathname])
     return (
         <>
-            <div className='lg:hidden bg-[#f8f8fa] w-full fixed top-0 left-0 h-12 flex space-x-2 justify-between items-center px-5 bg-transparent backdrop-blur-sm'>
+            <div className='lg:hidden bg-[#f8f8fa] w-full fixed top-0 left-0 h-12 flex space-x-2 justify-between items-center px-5 bg-transparent backdrop-blur-sm z-20'>
                 <div className='text-black text-xl'>{(pathname==="/")?<>Dashboard</>:(pathname==="/users")?<>Users</>:(pathname==="/personil")?<>Personil</>:(pathname==="/database")?<>Database</>:(pathname==="/monitoring")?<>Monitoring</>:<>Laporan</>}</div>
                 <div className='flex justify-center items-center relative'>
                     <BellIcon className='w-7 h-7 text-black' />
@@ -43,12 +51,16 @@ function Header() {
                     <SearchIcon className='text-gray-400 w-6 h-6' />
                 </div>
                 <div className='flex justify-center items-center space-x-4'>
-                    <div className='flex justify-center items-center relative'>
-                        <BellIcon className='w-8 h-8 text-black' />
+                    <div className='flex justify-center items-center relative cursor-pointer'>
+                        <BellIcon className='w-8 h-8 text-gray-600 ' />
                         <div className='absolute top-0 right-0 bg-blue-500 rounded-xl text-white px-1 text-xs'>3</div>
                     </div>
-                    <figure className='w-12 h-12'>
-                        <img src='https://via.placeholder.com/48x48.png?text=A' alt='profile' className='w-full h-full rounded-lg' />
+                    <figure className='w-12 h-12 relative'>
+                        <img src='https://via.placeholder.com/48x48.png?text=A' alt='profile' className='w-full h-full rounded-xl cursor-pointer' onClick={()=> setshowmenu(!showmenu)} />
+                        {showmenu&&<div className='flex flex-col items-center divide-y absolute -bottom-15 w-28 z-10 p-2 rounded-lg right-0 bg-[#F8F8FA]'>
+                            <p className='text-sm text-gray-500 cursor-pointer font-semibold hover:text-gray-700'>Setting</p>
+                            <p className='text-sm text-rose-500 cursor-pointer font-semibold hover:text-rose-700' onClick={()=> dispatch(logout())}>Logout</p>
+                        </div>}
                     </figure>
                 </div>
             </div>

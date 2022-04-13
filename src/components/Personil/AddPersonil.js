@@ -1,16 +1,20 @@
 import {ChevronLeftIcon,CameraIcon} from '@heroicons/react/outline'
 import { useRef, useState } from 'react'
+import {postPersonil} from '../../features/personilSlice'
+import {useDispatch} from 'react-redux'
 function AddPersonil({handleAddshow}) {
+    const dispatch = useDispatch()
     const [data,setdata] = useState({
         nama:'',
         pangkat:'',
         nrp:'',
+        nohp:'',
         agama:'',
         gol_darah:'',
         sumber_ta:'',
         suku:'',
         jabatan:'',
-        satuan:'',
+        satuan:'', //optional
         tgl_lahir:'',
         pendidikan_umum:'',
         pendidikan_militer:'',
@@ -26,10 +30,40 @@ function AddPersonil({handleAddshow}) {
         prestasi:'',
         status:'',
     })
+    const [validation,setvalidation] = useState('')
     const [image,setimage] = useState(null)
     const [picture,setpicture]=useState(null)
     const img = useRef()
-    
+    function validatonForm(){
+        if(data.nama==='') return setvalidation('Nama tidak boleh kosong')
+        if(data.pangkat==='') return setvalidation('Pangkat tidak boleh kosong')
+        if(data.nrp==='') return setvalidation('NRP tidak boleh kosong')
+        if(data.nohp==='') return setvalidation('Nomor HP tidak boleh kosong')
+        if(data.agama==='') return setvalidation('Agama tidak boleh kosong')
+        if(data.gol_darah==='') return setvalidation('Golongan Darah tidak boleh kosong')
+        if(data.sumber_ta==='') return setvalidation('Sumber TA tidak boleh kosong')
+        if(data.suku==='') return setvalidation('Suku tidak boleh kosong')
+        if(data.jabatan==='') return setvalidation('Jabatan tidak boleh kosong')
+        if(data.tgl_lahir==='') return setvalidation('Tanggal Lahir tidak boleh kosong')
+        if(data.pendidikan_umum==='') return setvalidation('Pendidikan Umum tidak boleh kosong')
+        if(data.pendidikan_militer==='') return setvalidation('Pendidikan Militer tidak boleh kosong')
+        if(data.dikbangpres==='') return setvalidation('Dikbang Presiden tidak boleh kosong')
+        if(data.spes==='') return setvalidation('Spesialisasi tidak boleh kosong')
+        if(data.infiltrasi==='') return setvalidation('Infiltrasi tidak boleh kosong')
+        if(data.riwayat_jabatan==='') return setvalidation('Riwayat Jabatan tidak boleh kosong')
+        if(data.riwayat_pangkat==='') return setvalidation('Riwayat Pangkat tidak boleh kosong')
+        if(data.riwayat_penugasan_dn==='') return setvalidation('Riwayat Penugasan DN tidak boleh kosong')
+        if(data.riwayat_penugasan_ln==='') return setvalidation('Riwayat Penugasan LN tidak boleh kosong')
+        if(data.istri==='') return setvalidation('Istri tidak boleh kosong')
+        if(data.anak==='') return setvalidation('Anak tidak boleh kosong')
+        if(data.prestasi==='') return setvalidation('Prestasi tidak boleh kosong')
+        if(data.status==='') return setvalidation('Status tidak boleh kosong')
+        return submitForm()
+    }
+    function submitForm(){
+        dispatch(postPersonil({data:data,image:image}))
+        handleAddshow()
+    }
   return (
     <div className='flex flex-col w-full justify-start bg-white p-5 rounded-xl'>
         <input  type='file' hidden name="image" accept="image/*" ref={img} onChange={(e)=>{
@@ -41,7 +75,7 @@ function AddPersonil({handleAddshow}) {
             <ChevronLeftIcon className='text-red hover:text-hoveRed w-8 h-8' />
             <p className='text-red text-lg hover:text-hoveRed select-none'>Back</p>
         </div>
-        <div className='w-40 h-40 relative self-center'>
+        <div className='w-40 h-40 relative self-center z-0'>
             <img className='w-full h-full rounded-xl ' src={picture?picture:'https://via.placeholder.com/240x240?text=IMG'} />
             <div onClick={()=> img.current.click()} className=' cursor-pointer flex rounded-full absolute bottom-1 right-1 bg-black p-1'><CameraIcon className='w-5 h-5 text-white'/></div>
         </div>
@@ -62,6 +96,12 @@ function AddPersonil({handleAddshow}) {
                 <p className='font-poppins text-gray-500 text-lg'>NRP</p>
                 <div className='rounded-md border border-[#ab54db] bg-white py-1 w-72 px-2'>
                     <input type='text' className='outline-none w-full' value={data.nrp} onChange={(e)=> setdata({...data, nrp:e.target.value})} />
+                </div>
+            </div>
+            <div className='flex flex-col'>
+                <p className='font-poppins text-gray-500 text-lg'>No. HP</p>
+                <div className='rounded-md border border-[#ab54db] bg-white py-1 w-72 px-2'>
+                    <input type='number' className='outline-none w-full' value={data.nohp} onChange={(e)=> setdata({...data, nohp:e.target.value})} />
                 </div>
             </div>
             <div className='flex flex-col'>
@@ -220,9 +260,8 @@ function AddPersonil({handleAddshow}) {
                 </div>
             </div>
         </form>
-        <button className='text-white bg-[#00a389] px-4 py-1 rounded-lg w-28 mt-5 self-end' onClick={()=>{
-            handleAddshow()
-        }}>Simpan</button>
+        {validation&&<div className='bg-rose-100 text-red py-1 px-2'>{validation}</div>}
+        <button className='text-white bg-[#00a389] px-4 py-1 rounded-lg w-28 mt-5 self-end' onClick={()=>validatonForm()}>Simpan</button>
     </div>
   )
 }
