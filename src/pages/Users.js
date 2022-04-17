@@ -25,7 +25,7 @@ function Users() {
             <PlusIcon className='w-7 h-7 text-white' />
             <p className='text-white'>Users</p>
         </div>
-        <div className='text-gray-400 hidden lg:block'>{users.filter(val => val.nama.toLowerCase().includes(search.toLowerCase())).length} Users</div>
+        <div className='text-gray-400 hidden lg:block'>{users?.filter(val => val.nama.toLowerCase().includes(search.toLowerCase())).length} Users</div>
         <div className='flex flex-col lg:flex-row lg:space-x-10'>
           <div className='flex justify-center items-center border border-gray-400 rounded-md px-2 space-x-1'>
             <SearchIcon className='text-gray-400 w-6 h-6' />
@@ -52,7 +52,7 @@ function Users() {
             </thead>
             <tbody className='overflow-y-auto w-full h-[65vh] flex flex-col bg-white rounded-br-md rounded-bl-md'>
               {
-                users.filter(val => val.nama.toLowerCase().includes(search.toLowerCase())).map((value,index)=>(
+                users?.filter(val => val.nama.toLowerCase().includes(search.toLowerCase())).map((value,index)=>(
                   <tr key={index+1} className="flex w-full lg:w-full items-center py-3 px-4 border-b border-gray-100 h-auto">
                     {/* <td className='h-auto w-[15vw] lg:w-[5%] '>1</td> */}
                     <td className='h-auto w-[50vw] lg:w-[30%] flex space-x-1 items-center'>

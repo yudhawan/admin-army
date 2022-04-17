@@ -243,7 +243,7 @@ function AddPersonil({handleAddshow}) {
             <div className='flex flex-col'>
                 <p className='font-poppins text-gray-500 text-lg'>Prestasi</p>
                 <div className='rounded-md border border-[#ab54db] bg-white py-1 w-72 px-2'>
-                    <textarea type='text' className='outline-none w-full h-20' value={data.preprestasi} onChange={(e)=> setdata({...data,prestasi:e.target.value})}/>
+                    <textarea type='text' className='outline-none w-full h-20' value={data.prestasi} onChange={(e)=> setdata({...data,prestasi:e.target.value})}/>
                 </div>
             </div>
             <div className='flex flex-col'>

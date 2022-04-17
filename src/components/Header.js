@@ -57,7 +57,7 @@ function Header() {
                     </div>
                     <figure className='w-12 h-12 relative'>
                         <img src='https://via.placeholder.com/48x48.png?text=A' alt='profile' className='w-full h-full rounded-xl cursor-pointer' onClick={()=> setshowmenu(!showmenu)} />
-                        {showmenu&&<div className='flex flex-col items-center divide-y absolute -bottom-15 w-28 z-10 p-2 rounded-lg right-0 bg-[#F8F8FA]'>
+                        {showmenu&&<div className='flex flex-col items-center divide-y fixed z-50 -bottom-15 w-28  p-2 rounded-lg right-0 bg-[#F8F8FA]'>
                             <p className='text-sm text-gray-500 cursor-pointer font-semibold hover:text-gray-700'>Setting</p>
                             <p className='text-sm text-rose-500 cursor-pointer font-semibold hover:text-rose-700' onClick={()=> dispatch(logout())}>Logout</p>
                         </div>}

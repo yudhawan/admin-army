@@ -38,7 +38,21 @@ export const deletePersonil = createAsyncThunk("personil/deletePersonil", async 
     dispatch(getPersonil());
     return result.data;
 })
-
+export const updatePersonil = createAsyncThunk("personil/updatePersonil", async (data,{getState,dispatch})=>{
+    let formdata = new FormData();
+    formdata.append("personil",JSON.stringify(data.data));
+    formdata.append("images",data.image);
+    const result = await axios({
+        method:"PUT",
+        url:"http://127.0.0.1:4000/admin/personil",
+        headers:{
+            "authorization": "Bearer "+getState().auth.token
+        },
+        data:formdata
+    })
+    dispatch(getPersonil());
+    return result.data;
+})
 const personilSLice = createSlice({
     name: "personil",
     initialState: {
@@ -66,6 +80,26 @@ const personilSLice = createSlice({
             state.message = action.payload.message
         },
         [postPersonil.rejected]:(state,action)=>{
+            state.error = action.error
+        },
+        [deletePersonil.pending]: (state)=>{
+            state.loading = true;
+        },
+        [deletePersonil.fulfilled]:(state,action)=>{
+            state.status = action.payload.status
+            state.message = action.payload.message
+        },
+        [deletePersonil.rejected]:(state,action)=>{
+            state.error = action.error
+        },
+        [updatePersonil.pending]: (state)=>{
+            state.loading = true;
+        },
+        [updatePersonil.fulfilled]:(state,action)=>{
+            state.status = action.payload.status
+            state.message = action.payload.message
+        },
+        [updatePersonil.rejected]:(state,action)=>{
             state.error = action.error
         }
     }

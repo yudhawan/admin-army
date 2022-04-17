@@ -1,11 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 export const login = createAsyncThunk("auth/login", async (data) => {
-    
     const result = await axios.post("http://127.0.0.1:4000/authentication/login_admin", data);
     if(result.data.token) localStorage.setItem("_ar_m_t", result.data.token);
-    return result.data.token
-    
+    return result.data
 })
 export const servicesAuth = createAsyncThunk("auth/serviceAuth", async ()=>{
     const currentToken = localStorage.getItem("_ar_m_t");
@@ -47,7 +45,7 @@ const authSlice = createSlice({
         },
         [login.fulfilled]: (state, action) => {
             state.loading = false;
-            state.token = action.payload;
+            state.token = action.payload.token;
         },
         [login.rejected]: (state, action) => {
             state.loading = false;

@@ -10,8 +10,8 @@ function Personil() {
   const {personil,loading} = useSelector(state=>state.personil)
   const [search,setsearch] = useState("")
   const [addshow,setaddshow]=useState(false)
-  const [editshow,seteditshow]=useState({id:1,show:false})
-  const [deleteshow,setdeleteshow]=useState({id:1,show:false})
+  const [editshow,seteditshow]=useState({id:0,show:false})
+  const [deleteshow,setdeleteshow]=useState({id:0,show:false})
   const [menu,setmenu]=useState(0)
   const handleAddshow=()=> setaddshow(!addshow)
   const handleEditshow=(id=0)=> seteditshow({id:id,show:!editshow.show})
@@ -21,7 +21,7 @@ function Personil() {
    },[])
   return (
     <div  className='flex flex-col w-full h-full space-y-5'>
-      {addshow?<AddPersonil handleAddshow={handleAddshow} />:editshow.show?<EditPersonil handleEditshow={handleEditshow}/>:<><div className='flex justify-between w-full pr-16 space-x-1'>
+      {addshow?<AddPersonil handleAddshow={handleAddshow} />:editshow.show?<EditPersonil handleEditshow={handleEditshow} editshow={editshow}/>:<><div className='flex justify-between w-full pr-16 space-x-1'>
         <div className='bg-red hover:bg-hoveRed rounded-lg flex justify-center items-center py-1 px-4 space-x-3 cursor-pointer' onClick={handleAddshow}>
             <PlusIcon className='w-7 h-7 text-white' />
             <p className='text-white'>Personil</p>
@@ -59,20 +59,23 @@ function Personil() {
               </div>
               <div className='flex space-x-1'>
                 <FireIcon className='w-4 h-4 text-red'/>
-                <p className='text-xs text-black line-clamp-1'>{val.satuan}</p>
+                <p className='text-xs text-black line-clamp-1'>{val.satuan?val.satuan:<>--</>}</p>
               </div>
             </div>
             <div className='flex-flex-col pt-4 relative'>
               <DotsVerticalIcon className='w-5 h-5 cursor-pointer hover:text-hoveRed' onClick={()=>{
                 if(menu) setmenu(0)
-                if(!menu) setmenu(val)
+                if(!menu) setmenu(val.id)
                 }}/>
-              {(menu==val)?<div className='bg-white flex-col space-y-2 rounded-md p-2 border border-gray-300 absolute'>
+              {(menu==val.id)?<div className='bg-white flex-col space-y-2 rounded-md p-2 border border-gray-300 absolute'>
                 <div className='flex space-x-1 cursor-pointer' onClick={()=>handleEditshow(val.id)}>
                   <PencilIcon className='w-4 h-4 text-green-500'/>
                   <p className='text-xs text-green-500'>Edit</p>
                 </div>
-                <div className='flex space-x-1 cursor-pointer' onClick={()=>dispatch(deletePersonil(val.id))}>
+                <div className='flex space-x-1 cursor-pointer' onClick={()=>{
+                  dispatch(deletePersonil(val.id))
+                  setmenu(0)
+                  }}>
                   <TrashIcon className='w-4 h-4 text-rose-500'/>
                   <p className='text-xs text-rose-500'>Hapus</p>
                 </div>

@@ -1,35 +1,75 @@
 import {ChevronLeftIcon,CameraIcon} from '@heroicons/react/outline'
-import { useRef, useState } from 'react'
-function EditPersonil({handleEditshow}) {
+import { useEffect, useRef, useState } from 'react'
+import {useDispatch,useSelector} from 'react-redux'
+import {getPersonil,updatePersonil} from '../../features/personilSlice'
+function EditPersonil({handleEditshow,editshow}) {
+    const dispatch = useDispatch()
+    const {personil,loading} = useSelector(state=>state.personil)
+    const person= personil?.filter(val=>val.id===editshow.id)[0]
     const [data,setdata] = useState({
-        nama:'',
-        pangkat:'',
-        nrp:'',
-        agama:'',
-        gol_darah:'',
-        sumber_ta:'',
-        suku:'',
-        jabatan:'',
-        satuan:'',
-        tgl_lahir:'',
-        pendidikan_umum:'',
-        pendidikan_militer:'',
-        dikbangpres:'',
-        spes:'',
-        infiltrasi:'',
-        riwayat_jabatan:'',
-        riwayat_pangkat:'',
-        riwayat_penugasan_dn:'',
-        riwayat_penugasan_ln:'',
-        istri:'',
-        anak:'',
-        prestasi:'',
-        status:'',
+        id:person.id,
+        nama:person.nama,
+        pangkat:person.pangkat,
+        nrp:person.nrp,
+        nohp:person.nohp,
+        agama:person.agama,
+        gol_darah:person.gol_darah,
+        sumber_ta:person.sumber_ta,
+        suku:person.suku,
+        jabatan:person.jabatan,
+        satuan:person.satuan, //optional
+        tgl_lahir:person.tgl_lahir,
+        pendidikan_umum:person.pendidikan_umum,
+        pendidikan_militer:person.pendidikan_militer,
+        dikbangpres:person.dikbangpres,
+        spes:person.spes,
+        infiltrasi:person.infiltrasi,
+        riwayat_jabatan:person.riwayat_jabatan,
+        riwayat_pangkat:person.riwayat_pangkat,
+        riwayat_penugasan_dn:person.riwayat_penugasan_dn,
+        riwayat_penugasan_ln:person.riwayat_penugasan_ln,
+        istri:person.istri,
+        anak:person.anak,
+        prestasi:person.prestasi,
+        status:person.status,
     })
-    const [image,setimage] = useState(null)
+    const [validation,setvalidation] = useState('')
+    const [image,setimage] = useState(person.picture)
     const [picture,setpicture]=useState(null)
     const img = useRef()
-    
+    function validatonForm(){
+        if(data.nama==='') return setvalidation('Nama tidak boleh kosong')
+        if(data.pangkat==='') return setvalidation('Pangkat tidak boleh kosong')
+        if(data.nrp==='') return setvalidation('NRP tidak boleh kosong')
+        if(data.nohp==='') return setvalidation('Nomor HP tidak boleh kosong')
+        if(data.agama==='') return setvalidation('Agama tidak boleh kosong')
+        if(data.gol_darah==='') return setvalidation('Golongan Darah tidak boleh kosong')
+        if(data.sumber_ta==='') return setvalidation('Sumber TA tidak boleh kosong')
+        if(data.suku==='') return setvalidation('Suku tidak boleh kosong')
+        if(data.jabatan==='') return setvalidation('Jabatan tidak boleh kosong')
+        if(data.tgl_lahir==='') return setvalidation('Tanggal Lahir tidak boleh kosong')
+        if(data.pendidikan_umum==='') return setvalidation('Pendidikan Umum tidak boleh kosong')
+        if(data.pendidikan_militer==='') return setvalidation('Pendidikan Militer tidak boleh kosong')
+        if(data.dikbangpres==='') return setvalidation('Dikbang Presiden tidak boleh kosong')
+        if(data.spes==='') return setvalidation('Spesialisasi tidak boleh kosong')
+        if(data.infiltrasi==='') return setvalidation('Infiltrasi tidak boleh kosong')
+        if(data.riwayat_jabatan==='') return setvalidation('Riwayat Jabatan tidak boleh kosong')
+        if(data.riwayat_pangkat==='') return setvalidation('Riwayat Pangkat tidak boleh kosong')
+        if(data.riwayat_penugasan_dn==='') return setvalidation('Riwayat Penugasan DN tidak boleh kosong')
+        if(data.riwayat_penugasan_ln==='') return setvalidation('Riwayat Penugasan LN tidak boleh kosong')
+        if(data.istri==='') return setvalidation('Istri tidak boleh kosong')
+        if(data.anak==='') return setvalidation('Anak tidak boleh kosong')
+        if(data.prestasi==='') return setvalidation('Prestasi tidak boleh kosong')
+        if(data.status==='') return setvalidation('Status tidak boleh kosong')
+        return submitForm()
+    }
+    function submitForm(){
+        dispatch(updatePersonil({data:data,image:image}))
+        handleEditshow()
+    }
+    useEffect(()=>{
+        dispatch(getPersonil())
+    },[handleEditshow])
   return (
     <div className='flex flex-col w-full justify-start bg-white p-5 rounded-xl'>
         <input  type='file' hidden name="image" accept="image/*" ref={img} onChange={(e)=>{
@@ -43,7 +83,7 @@ function EditPersonil({handleEditshow}) {
         </div>
         <div className='font-poppins text-gray-300 mt-5'>Update Data Personil</div>
         <div className='w-40 h-40 relative self-center'>
-            <img className='w-full h-full rounded-xl ' src={picture?picture:'https://via.placeholder.com/240x240?text=IMG'} />
+            <img className='w-full h-full rounded-xl ' src={picture?picture:'http://127.0.0.1:4000/users/img/'+image} />
             <div onClick={()=> img.current.click()} className=' cursor-pointer flex rounded-full absolute bottom-1 right-1 bg-black p-1'><CameraIcon className='w-5 h-5 text-white'/></div>
         </div>
         <form className='flex flex-wrap gap-4 mt-5'>
@@ -63,6 +103,12 @@ function EditPersonil({handleEditshow}) {
                 <p className='font-poppins text-gray-500 text-lg'>NRP</p>
                 <div className='rounded-md border border-[#ab54db] bg-white py-1 w-72 px-2'>
                     <input type='text' className='outline-none w-full' value={data.nrp} onChange={(e)=> setdata({...data, nrp:e.target.value})} />
+                </div>
+            </div>
+            <div className='flex flex-col'>
+                <p className='font-poppins text-gray-500 text-lg'>No. HP</p>
+                <div className='rounded-md border border-[#ab54db] bg-white py-1 w-72 px-2'>
+                    <input type='number' className='outline-none w-full' value={data.nohp} onChange={(e)=> setdata({...data, nohp:e.target.value})} />
                 </div>
             </div>
             <div className='flex flex-col'>
@@ -204,7 +250,7 @@ function EditPersonil({handleEditshow}) {
             <div className='flex flex-col'>
                 <p className='font-poppins text-gray-500 text-lg'>Prestasi</p>
                 <div className='rounded-md border border-[#ab54db] bg-white py-1 w-72 px-2'>
-                    <textarea type='text' className='outline-none w-full h-20' value={data.preprestasi} onChange={(e)=> setdata({...data,prestasi:e.target.value})}/>
+                    <textarea type='text' className='outline-none w-full h-20' value={data.prestasi} onChange={(e)=> setdata({...data,prestasi:e.target.value})}/>
                 </div>
             </div>
             <div className='flex flex-col'>
@@ -221,9 +267,8 @@ function EditPersonil({handleEditshow}) {
                 </div>
             </div>
         </form>
-        <button className='text-white bg-[#00a389] px-4 py-1 rounded-lg w-28 mt-5 self-end' onClick={()=>{
-            handleEditshow()
-        }}>Simpan</button>
+        {validation&&<div className='bg-rose-100 text-red py-1 px-2'>{validation}</div>}
+        <button className='text-white bg-[#00a389] px-4 py-1 rounded-lg w-28 mt-5 self-end' onClick={()=>validatonForm()}>Simpan</button>
     </div>
   )
 }
