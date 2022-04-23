@@ -2,6 +2,7 @@ import {ChevronLeftIcon,CameraIcon} from '@heroicons/react/outline'
 import {getUsers,updateUsers} from '../../features/usersSlice'
 import {useDispatch,useSelector} from 'react-redux'
 import { useEffect, useState,useRef } from 'react'
+import host from '../../features/host'
 function EditUser({handleEditshow,id}) {
     const dispatch = useDispatch()
     const {users,loading} = useSelector(state=>state.users)
@@ -32,7 +33,7 @@ function EditUser({handleEditshow,id}) {
         <div className='text-gray-500'>Update User</div>
         <form className='flex flex-col space-y-2 mt-5'>
             <div className='w-40 h-40 relative'>
-                <img className='w-full h-full rounded-xl ' src={picture?picture:'http://127.0.0.1:4000/users/img/'+user.picture} />
+                <img className='w-full h-full rounded-xl ' src={picture?picture:host+'/users/img/'+user.picture} />
                 <div onClick={()=> img.current.click()} className=' cursor-pointer flex rounded-full absolute bottom-1 right-1 bg-black p-1'><CameraIcon className='w-5 h-5 text-white'/></div>
             </div>
             <div className='flex flex-col'>

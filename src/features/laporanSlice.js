@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import host from "./host";
 export const getLaporan = createAsyncThunk("laporan/getLaporan", async (arg,{getState})=>{
     const result = await axios({
         method: "get",
-        url: "http://127.0.0.1:4000/admin/laporan",
+        url: host+"/admin/laporan",
         headers:{
             "authorization": "Bearer "+getState().auth.token
         },
@@ -14,8 +15,17 @@ export const getLaporan = createAsyncThunk("laporan/getLaporan", async (arg,{get
 export const deleteLaporan = createAsyncThunk("laporan/deleteLaporan", async (data)=>{
     return null
 })
-export const updateLaporan = createAsyncThunk("laporan/updateLaporan", async (data)=>{
-    return null
+export const updateLaporan = createAsyncThunk("laporan/updateLaporan", async (data,{getState,dispatch})=>{
+    const result = await axios({
+        url:host+"/admin/laporan",
+        method:"put",
+        data:data,
+        headers:{
+            "authorization": "Bearer "+getState().auth.token
+        }
+    })
+    dispatch(getLaporan())
+    return result.data;
 })
 const laporanSlice = createSlice({
     name:'laporan',

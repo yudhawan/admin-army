@@ -3,8 +3,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch,useSelector } from 'react-redux'
 import {getUsers,deleteUsers,clearStatus} from '../features/usersSlice'
 import AddUser from '../components/Users/AddUser'
-import DeleteUser from '../components/Users/DeleteUser'
-import EditUser from '../components/Users/EditUser'
+import host from '../features/host'
 function Users() {
   const dispatch = useDispatch()
   const {users,loading,status} = useSelector(state=>state.users)
@@ -57,7 +56,7 @@ function Users() {
                     {/* <td className='h-auto w-[15vw] lg:w-[5%] '>1</td> */}
                     <td className='h-auto w-[50vw] lg:w-[30%] flex space-x-1 items-center'>
                       <div className='w-12 h-10'>
-                        <img src={`http://127.0.0.1:4000/users/img/${value.picture}`} className='w-full h-full rounded-lg' />
+                        <img src={host+`/users/img/${value.picture}`} className='w-full h-full rounded-lg' />
                       </div>
                       <p className='text-sm w-full line-clamp-1'>{value.nama}</p>
                     </td>

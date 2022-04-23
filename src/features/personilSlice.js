@@ -1,9 +1,10 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import host from "./host";
 export const getPersonil = createAsyncThunk("personil/getPersonil", async (arg,{getState})=>{
     const result = await axios({
         method: "get",
-        url:"http://127.0.0.1:4000/admin/personil",
+        url:host+"/admin/personil",
         headers:{
             "authorization": "Bearer "+getState().auth.token
         },
@@ -17,7 +18,7 @@ export const postPersonil = createAsyncThunk("personil,postPersonil", async (dat
     formdata.append("images",data.image);
     const result = await axios({
         method:"POST",
-        url:"http://127.0.0.1:4000/admin/personil",
+        url:host+"/admin/personil",
         headers:{
             "authorization": "Bearer "+getState().auth.token
         },
@@ -29,7 +30,7 @@ export const postPersonil = createAsyncThunk("personil,postPersonil", async (dat
 export const deletePersonil = createAsyncThunk("personil/deletePersonil", async (id,{getState,dispatch})=>{
     const result = await axios({
         method:"DELETE",
-        url:"http://127.0.0.1:4000/admin/personil",
+        url:host+"/admin/personil",
         headers:{
             "authorization": "Bearer "+getState().auth.token
         },
@@ -44,7 +45,7 @@ export const updatePersonil = createAsyncThunk("personil/updatePersonil", async 
     formdata.append("images",data.image);
     const result = await axios({
         method:"PUT",
-        url:"http://127.0.0.1:4000/admin/personil",
+        url:host+"/admin/personil",
         headers:{
             "authorization": "Bearer "+getState().auth.token
         },

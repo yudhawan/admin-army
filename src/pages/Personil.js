@@ -5,6 +5,7 @@ import { useDispatch,useSelector } from 'react-redux'
 import AddPersonil from '../components/Personil/AddPersonil'
 import EditPersonil from '../components/Personil/EditPersonil'
 import DeletePersonil from '../components/Personil/DeletePersonil'
+import host from '../features/host'
 function Personil() {
   const dispatch = useDispatch()
   const {personil,loading} = useSelector(state=>state.personil)
@@ -45,7 +46,7 @@ function Personil() {
           {personil.filter(val=> val.nama.toLowerCase().includes(search.toLowerCase())).map((val,index)=><div className='bg-white rounded-xl flex space-x-2 p-4 w-60 h-56 justify-between' key={index+1}>
             <div className='flex-col space-y-2'>
               <div className='w-14 h-14 rounded-xl bg-gray-300'>
-                {val.picture?<img src={`http://127.0.0.1:4000/users/img/${val.picture}`} className="rounded-xl w-full h-full" />:<></>}
+                {val.picture?<img src={host+`/users/img/${val.picture}`} className="rounded-xl w-full h-full" />:<></>}
               </div>
               <div className='text-black text-sm font-semibold font-poppins line-clamp-1'>{val.nama}</div>
               <div className='text-gray-400 text-xs flex items-center'> <ShieldCheckIcon className='w-5 h-5'/>{val.pangkat}</div>
@@ -68,7 +69,10 @@ function Personil() {
                 if(!menu) setmenu(val.id)
                 }}/>
               {(menu==val.id)?<div className='bg-white flex-col space-y-2 rounded-md p-2 border border-gray-300 absolute'>
-                <div className='flex space-x-1 cursor-pointer' onClick={()=>handleEditshow(val.id)}>
+                <div className='flex space-x-1 cursor-pointer' onClick={()=>{
+                  handleEditshow(val.id)
+                  setmenu(0)
+                  }}>
                   <PencilIcon className='w-4 h-4 text-green-500'/>
                   <p className='text-xs text-green-500'>Edit</p>
                 </div>

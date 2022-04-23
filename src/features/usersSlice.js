@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import host from "./host";
 export const getUsers = createAsyncThunk("users/getUsers", async (arg,{getState})=>{
     const currentToken = getState().auth.token;
     const result = await axios({
         method: "GET",
-        url: "http://127.0.0.1:4000/admin/users",
+        url: host+"/admin/users",
         headers:{
             'authorization': `Bearer ${currentToken}`,
         }
@@ -23,7 +24,7 @@ export const postUsers = createAsyncThunk("users/postUsers", async (data,{getSta
     form.append('images',data.picture)
     const result = await axios({
         method: "POST",
-        url: "http://127.0.0.1:4000/admin/users",
+        url: host+"/admin/users",
         headers:{
             'authorization': `Bearer ${currentToken}`,
         },
@@ -36,7 +37,7 @@ export const deleteUsers = createAsyncThunk("users/deleteUsers", async (data,{ge
     const currentToken = getState().auth.token;
     await axios({
         method: "DELETE",
-        url: 'http://127.0.0.1:4000/admin/users',
+        url: host+'/admin/users',
         headers:{
             'authorization': `Bearer ${currentToken}`,
         },

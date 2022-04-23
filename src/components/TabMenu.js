@@ -1,12 +1,19 @@
 import {HomeIcon,CollectionIcon,UserGroupIcon,DatabaseIcon,PresentationChartBarIcon,DocumentIcon} from '@heroicons/react/outline'
 import {useLocation, useNavigate} from 'react-router-dom';
 import { useState } from 'react'
+import Logo from './logo.png'
 function TabMenu() {
     const navigate = useNavigate()
     const {pathname} = useLocation()
     return (
         <>
-        <div className='bg-[#f8f8fa] rounded-3xl w-1/5 h-[95vh] flex flex-col px-2 py-5 items-center fixed hidden lg:block'>
+        <div className='bg-[#f8f8fa] rounded-3xl w-[20vw] h-[95vh] lg:flex flex space-y-8 flex-col px-2 py-5 items-center fixed hidden lg:block'>
+            <div className='flex w-40 h-32 self-center'>
+                <img src={Logo} className='w-full h-full' />
+            </div>
+            {/* <div className='flex w-36 h-16 self-center'>
+                <img src={Logo} className='w-full h-full' />
+            </div> */}
             <div className='w-full h-auto space-y-3 px-5'>
                 <div className={`flex space-x-3 cursor-pointer ${(pathname==='/')?'bg-[#f4dfe1]':''} rounded-xl px-2 py-2 justify-start items-center`} onClick={()=> navigate('/')}>
                     <HomeIcon className={`w-5 h-5 ${(pathname==='/')?'text-[#db5454]':'text-gray-500'} text-gray-500`}/>

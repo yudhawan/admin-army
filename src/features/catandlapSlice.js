@@ -1,11 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import host from "./host";
 export const getCategories = createAsyncThunk(
     "catandlap/getCategories",
     async (arg,{getState}) => {
         const result = await axios({
             method: "get",
-            url: "http://127.0.0.1:4000/admin/kategori",
+            url: host+"/admin/kategori",
             headers:{
                 "authorization": "Bearer "+getState().auth.token
             },
@@ -19,7 +20,7 @@ export const postCategories = createAsyncThunk(
         try {
             const result = await axios({
                 method: "post",
-                url: "http://127.0.0.1:4000/admin/kategori",
+                url: host+"/admin/kategori",
                 headers:{
                     "authorization": "Bearer "+getState().auth.token
                 },
@@ -38,7 +39,7 @@ export const deleteCategories = createAsyncThunk(
         try {
             const result = await axios({
                 method: "delete",
-                url: "http://127.0.0.1:4000/admin/kategori",
+                url: host+"/admin/kategori",
                 headers:{
                     "authorization": "Bearer "+getState().auth.token
                 },
@@ -57,7 +58,7 @@ export const updateCategories = createAsyncThunk(
         try {
             const result = await axios({
                 method: "put",
-                url: "http://127.0.0.1:4000/admin/kategori",
+                url: host+"/admin/kategori",
                 headers:{
                     "authorization": "Bearer "+getState().auth.token
                 },
@@ -75,7 +76,7 @@ export const getJenisLaporan = createAsyncThunk(
     async (arg,{getState}) => {
         const result = await axios({
             method: "get",
-            url: "http://127.0.0.1:4000/admin/jenis_laporan",
+            url: host+"/admin/jenis_laporan",
             headers:{
                 "authorization": "Bearer "+getState().auth.token
             },
@@ -89,7 +90,7 @@ export const postJenisLaporan = createAsyncThunk(
         try {
             const result = await axios({
                 method: "post",
-                url: "http://127.0.0.1:4000/admin/jenis_laporan",
+                url: host+"/admin/jenis_laporan",
                 headers:{
                     "authorization": "Bearer "+getState().auth.token
                 },
@@ -108,7 +109,7 @@ export const deleteJenisLaporan = createAsyncThunk(
         try {
             const result = await axios({
                 method: "delete",
-                url: "http://127.0.0.1:4000/admin/jenis_laporan",
+                url: host+"/admin/jenis_laporan",
                 headers:{
                     "authorization": "Bearer "+getState().auth.token
                 },
@@ -127,7 +128,7 @@ export const updateJenisLaporan = createAsyncThunk(
         try {
             const result = await axios({
                 method: "put",
-                url: "http://127.0.0.1:4000/admin/jenis_laporan",
+                url: host+"/admin/jenis_laporan",
                 headers:{
                     "authorization": "Bearer "+getState().auth.token
                 },

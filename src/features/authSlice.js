@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import host from "./host";
 export const login = createAsyncThunk("auth/login", async (data) => {
-    const result = await axios.post("http://127.0.0.1:4000/authentication/login_admin", data);
+    const result = await axios.post(host+"/authentication/login_admin", data);
     if(result.data.token) localStorage.setItem("_ar_m_t", result.data.token);
     return result.data
 })
@@ -10,7 +11,7 @@ export const servicesAuth = createAsyncThunk("auth/serviceAuth", async ()=>{
     if(currentToken){
         let result = await axios({
             method: "GET",
-            url:"http://127.0.0.1:4000/authentication/services_admn",
+            url:host+"/authentication/services_admn",
             headers: {
                 'authorization': `Bearer ${currentToken}`,
             },

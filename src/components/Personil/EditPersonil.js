@@ -2,6 +2,7 @@ import {ChevronLeftIcon,CameraIcon} from '@heroicons/react/outline'
 import { useEffect, useRef, useState } from 'react'
 import {useDispatch,useSelector} from 'react-redux'
 import {getPersonil,updatePersonil} from '../../features/personilSlice'
+import host from '../../features/host'
 function EditPersonil({handleEditshow,editshow}) {
     const dispatch = useDispatch()
     const {personil,loading} = useSelector(state=>state.personil)
@@ -83,7 +84,7 @@ function EditPersonil({handleEditshow,editshow}) {
         </div>
         <div className='font-poppins text-gray-300 mt-5'>Update Data Personil</div>
         <div className='w-40 h-40 relative self-center'>
-            <img className='w-full h-full rounded-xl ' src={picture?picture:'http://127.0.0.1:4000/users/img/'+image} />
+            <img className='w-full h-full rounded-xl ' src={picture?picture:host+'/users/img/'+image} />
             <div onClick={()=> img.current.click()} className=' cursor-pointer flex rounded-full absolute bottom-1 right-1 bg-black p-1'><CameraIcon className='w-5 h-5 text-white'/></div>
         </div>
         <form className='flex flex-wrap gap-4 mt-5'>
