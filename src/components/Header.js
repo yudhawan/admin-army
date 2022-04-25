@@ -28,7 +28,7 @@ function Header() {
                 <div className='text-black text-xl font-bold w-96'>{
                 (pathname==="/")?<div className='flex-col'>
                     <div className='text-2xl'>Dashboard</div>
-                    <p className='text-sm font-normal'>Selamat datang di Smart Report System</p>
+                    <p className='text-sm font-normal'>Selamat datang di Sistem Manajemen Satuan</p>
                 </div>
                 :(pathname==="/users")?<div className='flex-col'>
                     <div className='text-2xl'>Users</div>

@@ -20,7 +20,7 @@ function Main(){
                 <PrivateElement>
                     <TabMenu/>
                 </PrivateElement>
-                <div className="lg:pl-80 pb-20 lg:pb-0 mt-12 lg:mt-20 p-2 lg:p-0 lg:w-full lg:h-full">
+                <div className="lg:pl-80  pb-20 lg:pb-0 mt-12 lg:mt-20 p-2 lg:p-0 lg:w-full lg:h-full">
                 <Routes>
                     <Route element={<PrivateRoute/>}>
                         <Route path='/' element={<Home/>} />

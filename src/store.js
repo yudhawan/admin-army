@@ -11,5 +11,6 @@ export default configureStore({
         laporan:laporanReducer,
         users:usersReducer,
         personil:personilReducer
-    }
+    },
+    devTools:false
 })

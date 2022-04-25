@@ -11,7 +11,10 @@ function MapZone({long,lat,fullmap}) {
       style: 'mapbox://styles/yudhawan/cl1lswt4t005614o985bzh2ug',
       center: [long, lat],
       zoom: 12
-    });
+    })
+    if(!mapboxgl.supported()){
+      console.log('Your browser does not support Mapbox GL')
+    }
     map.on('load', () => {
       map.resize()
       setmaps(map)

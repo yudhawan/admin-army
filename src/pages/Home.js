@@ -15,32 +15,32 @@ function Home() {
     dispatch(getLaporan())
   },[])
   return (
-    <div className='flex flex-col justify-center p-4 w-full h-full space-y-5'>
+    <div className='flex flex-col justify-center p-4 w-full h-full space-y-3'>
       {/* chart 1 */}
-      <div className='flex justify-start w-full h-auto space-x-8'>
+      <div className='flex justify-start w-full h-auto space-x-7'>
         <div className='bg-white flex p-4 rounded-xl items-center space-x-3'>
           <div className='flex-col'>
-            <p className='text-xs text-gray-400'>Jumlah Personil</p>
+            <p className='text-lg text-gray-400'>Jumlah Personil</p>
             <p className='text-2xl'>{personil.length}</p>
           </div>
           <CollectionIcon className='text-orange-500 w-7 h-7' />
         </div>
         <div className='bg-white flex p-4 rounded-xl items-center space-x-3'>
           <div className='flex-col'>
-            <p className='text-xs text-gray-400'>Jumlah Laporan</p>
+            <p className='text-lg text-gray-400'>Jumlah Laporan</p>
             <p className='text-2xl'>{laporan.length}</p>
           </div>
           <DocumentIcon className='text-slate-500 w-7 h-7' />
         </div>
         <div className='bg-white flex p-4 rounded-xl items-center space-x-3'>
           <div className='flex-col'>
-            <p className='text-xs text-gray-400'>Laporan Selesai</p>
+            <p className='text-lg text-gray-400'>Laporan Selesai</p>
             <p className='text-2xl'>{laporan.filter(val => val.status==="selesai").length}</p>
           </div>
           <BadgeCheckIcon className='text-green-500 w-7 h-7' />
         </div>
       </div>
-      <div className='flex space-x-10'>
+      <div className='flex space-x-2'>
         <div className='flex-col w-fit bg-white px-4 py-2 rounded-md'>
           <p>Laporan Minggu Ini</p>
           <p className='text-green-500'>{laporan.length} Laporan</p>
