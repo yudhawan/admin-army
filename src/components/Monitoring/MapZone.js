@@ -1,29 +1,45 @@
 import { useEffect, useRef, useState } from 'react';
+import Map from 'react-map-gl'
+import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
 let MAPBOX_TOKEN = "pk.eyJ1IjoieXVkaGF3YW4iLCJhIjoiY2wxa2cxZ3h2MDBnNDNqangzaHFuNXpwNyJ9.-NB1Dw2GlDb11fnUD3ZQng"
-mapboxgl.accessToken=MAPBOX_TOKEN
+// mapboxgl.accessToken=MAPBOX_TOKEN
 function MapZone({long,lat,fullmap}) {
   const [maps,setmaps]=useState(null)
   const mapRef = useRef(null)
+  const[viewport, setViewport] = useState({
+    width: "100%",
+    height: "400px",
+    latitude: lat,
+    longitude: long,
+    zoom: 5
+  });
   useEffect(()=>{
-    const map = new mapboxgl.Map({
-      container: mapRef.current,
-      style: 'mapbox://styles/yudhawan/cl1lswt4t005614o985bzh2ug',
-      center: [long, lat],
-      zoom: 12
-    })
-    if(!mapboxgl.supported()){
-      console.log('Your browser does not support Mapbox GL')
-    }
-    map.on('load', () => {
-      map.resize()
-      setmaps(map)
-    })
+    // const map = new mapboxgl.Map({
+    //   container: mapRef.current,
+    //   style: 'mapbox://styles/yudhawan/cl1lswt4t005614o985bzh2ug',
+    //   center: [long, lat],
+    //   zoom: 12
+    // })
+    // if(!mapboxgl.supported()){
+    //   console.log('Your browser does not support Mapbox GL')
+    // }
+    // map.on('load', () => {
+    //   map.resize()
+    //   setmaps(map)
+    // })
     // add marker
-    const marker = new mapboxgl.Marker().setLngLat([long, lat]).addTo(map);
+    // const marker = new mapboxgl.Marker().setLngLat([long, lat]).addTo(map);
   },[long,lat])
-  return <div style={{width:fullmap?'70vw':'24rem', height:fullmap?'80vh':'80vh'}} className={`rounded-lg`} ref={mapRef} />
-    
+  // return <div style={{width:fullmap?'70vw':'24rem', height:fullmap?'80vh':'80vh'}} className={`rounded-lg`} ref={mapRef} />
+  return(
+    <Map
+      {...viewport}
+      onViewportChange={setViewport}
+      mapboxApiAccessToken={MAPBOX_TOKEN}
+      mapStyle="mapbox://styles/yudhawan/cl1lswt4t005614o985bzh2ug"
+    />
+  )
   
 }
 // mapbox://styles/mapbox/streets-v11

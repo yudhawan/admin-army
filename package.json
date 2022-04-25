@@ -20,7 +20,8 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
     "tw-elements": "^1.0.0-alpha12",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "worker-loader": "^3.0.8"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -36,10 +37,17 @@
     ]
   },
   "browserslist": {
-    "defaults": [
+    "production": [
       ">0.2%",
       "not dead",
-      "not op_mini all"
+      "not op_mini all",
+      "not chrome < 51",
+      "not safari < 10"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
     ]
   },
   "devDependencies": {
