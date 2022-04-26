@@ -93,7 +93,7 @@ function Monitoring() {
         <div className='w-full h-full' >
           <MapZone long={location.longitude} lat={location.latitude} fullmap={fullmap} />
         </div>
-        {/* <ArrowsExpandIcon onClick={()=>setfullmap(!fullmap)} className='w-8 h-8 text-gray-500 absolute top-1 right-1 cursor-pointer'/> */}
+        <ArrowsExpandIcon onClick={()=>setfullmap(!fullmap)} className='w-8 h-8 text-gray-500 absolute top-1 right-1 cursor-pointer'/>
       </div>
     </div>
   )
