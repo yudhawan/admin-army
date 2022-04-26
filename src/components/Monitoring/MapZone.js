@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
-import MapboxWorker from 'mapbox-gl/dist/mapbox-gl-csp-worker';
+
 let MAPBOX_TOKEN = "pk.eyJ1IjoieXVkaGF3YW4iLCJhIjoiY2wxa2cxZ3h2MDBnNDNqangzaHFuNXpwNyJ9.-NB1Dw2GlDb11fnUD3ZQng"
-mapboxgl.workerClass=MapboxWorker
+
 mapboxgl.accessToken=MAPBOX_TOKEN
 function MapZone({long,lat,fullmap}) {
   const [maps,setmaps]=useState(null)
