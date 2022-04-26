@@ -89,12 +89,12 @@ function Monitoring() {
         }
         </div>
       </div>
-      <div className='flex relative -z-10'>
+      {/* <div className='flex relative -z-10'> */}
         <div className='w-full h-full' >
           <MapZone long={location.longitude} lat={location.latitude} fullmap={fullmap} />
         </div>
-        <ArrowsExpandIcon onClick={()=>setfullmap(!fullmap)} className='w-8 h-8 text-gray-500 absolute top-1 right-1 cursor-pointer'/>
-      </div>
+        {/* <ArrowsExpandIcon onClick={()=>setfullmap(!fullmap)} className='w-8 h-8 text-gray-500 absolute top-1 right-1 cursor-pointer'/> */}
+      {/* </div> */}
     </div>
   )
 }
