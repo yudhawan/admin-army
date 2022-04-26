@@ -12,10 +12,12 @@ function DetailLaporan({handleDetailshow,id}) {
       </div>
       <div className='w-full flex flex-col justify-center items-center space-y-2'>
       {
-        laporan.filter(val => val.id===id).map((val,index) => (
+        laporan.filter(val => val.id===id).map((val,index) => {
+          let img = val.image.split(',')
+        return(
           <>
             <div className='w-96 h-48'>
-              <img src={host+'/'+val.image} className="w-full h-full rounded-md" />
+              <img src={host+'/posts/img/'+img[0]} className="w-full h-full rounded-md" />
             </div>
             <div className='flex w-full justify-between'>
               <div className='flex-col w-1/2 space-y-2'>
@@ -48,7 +50,7 @@ function DetailLaporan({handleDetailshow,id}) {
             </div>
 
           </>
-        ))
+        )})
       }
       </div>
     </div>
