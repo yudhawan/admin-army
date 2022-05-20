@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker';
+
 let MAPBOX_TOKEN = "pk.eyJ1IjoieXVkaGF3YW4iLCJhIjoiY2wxa2cxZ3h2MDBnNDNqangzaHFuNXpwNyJ9.-NB1Dw2GlDb11fnUD3ZQng"
 mapboxgl.workerClass=MapboxWorker
 mapboxgl.accessToken=MAPBOX_TOKEN
@@ -32,7 +33,7 @@ function MapZone({long,lat,fullmap}) {
     // add marker
     const marker = new mapboxgl.Marker().setLngLat([long, lat]).addTo(map);
   },[long,lat])
-  return <div style={{width:fullmap?'70vw':'24rem', height:fullmap?'80vh':'80vh'}} className={`rounded-lg`} ref={mapRef} />
+  return <div className={`w-[35vw] h-[80vh] rounded-lg`} ref={mapRef} />
   
   
 }

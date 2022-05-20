@@ -1,4 +1,4 @@
-import {SearchIcon,PrinterIcon,DotsVerticalIcon} from '@heroicons/react/outline'
+import {PrinterIcon} from '@heroicons/react/outline'
 import { useEffect, useState,useRef } from 'react'
 import { useDispatch,useSelector } from 'react-redux'
 import {getLaporan,updateLaporan} from '../features/laporanSlice'
@@ -50,7 +50,7 @@ function Laporan() {
     dispatch(getJenisLaporan())
   },[])
   return (
-    <div className='flex flex-col w-full h-full space-y-5'>
+    <div className='flex flex-col w-full h-full space-y-5 '>
       {detailshow.show?<DetailLaporan handleDetailshow={handleDetailshow} id={detailshow.id}/>:<><div className='flex justify-start w-full pr-10 space-x-1'>
         <div className='flex flex-col lg:flex-row lg:space-x-2 '>
           <div className='flex justify-center items-center border border-yellow-400 rounded-lg px-3 bg-orange-500 h-fit py-2'>
@@ -102,14 +102,14 @@ function Laporan() {
 
       <div className='flex'>
         <table className='w-full text-left overflow-x-scroll'>
-            <thead className='flex w-full bg-white rounded-tr-md rounded-tl-md border-b border-gray-200'>
+            <thead className='flex w-full bg-red rounded-tr-md rounded-tl-md border border-gray-200'>
                 <tr className='flex w-full items-center py-3 px-4 space-x-1'>
-                    <th className='text-gray-400 w-[15vw] text-xs lg:w-10'>({laporan.length})</th>
-                    <th className='text-[#000] w-[50vw] text-sm lg:w-56'>Pengirim</th>
-                    <th className='text-[#000] w-[50vw] text-sm lg:w-64'>Judul Laporan</th>
-                    <th className='text-[#000] w-[30vw] text-sm lg:w-32'>Tanggal</th>
-                    <th className='text-[#000] w-[40vw] text-sm lg:w-52'>Status</th>
-                    <th className='text-[#000] w-[20vw] text-sm lg:w-20'>Action</th>
+                    <th className='text-gray-100 w-[15vw] text-sm lg:w-10'>({laporan.length})</th>
+                    <th className='text-gray-100 w-[50vw] text-sm lg:w-56'>Pengirim</th>
+                    <th className='text-gray-100 w-[50vw] text-sm lg:w-64'>Judul Laporan</th>
+                    <th className='text-gray-100 w-[30vw] text-sm lg:w-32'>Tanggal</th>
+                    <th className='text-gray-100 w-[40vw] text-sm lg:w-52 '>Status</th>
+                    <th className='text-gray-100 w-[20vw] text-sm lg:w-20'>Action</th>
                 </tr>
             </thead>
             <tbody className='overflow-y-auto w-full h-[65vh] flex flex-col bg-white rounded-br-md rounded-bl-md'>
@@ -139,7 +139,7 @@ function Laporan() {
                   }
                 </td>
                 <td className='h-auto w-[20vw] lg:w-20 flex space-x-1 relative'>
-                  <PrinterIcon className='text-orange-600 w-5 h-5 cursor-pointer' onClick={()=>{
+                  <PrinterIcon className='text-orange-100 w-5 h-5 cursor-pointer' onClick={()=>{
                     if(showmenu) setshowmenu(0)
                     if(!showmenu) setshowmenu(item.id)
                   }}/>
@@ -153,7 +153,7 @@ function Laporan() {
                       </div>
                     </div>:<></>
                   }
-                  {/* <DotsVerticalIcon className='text-gray-600 w-5 h-5 cursor-pointer' onClick={handleEditshow} /> */}
+                  {/* <DotsVerticalIcon className='text-gray-100 w-5 h-5 cursor-pointer' onClick={handleEditshow} /> */}
                 </td>
               </tr>)})}
             </tbody>

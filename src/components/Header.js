@@ -16,16 +16,44 @@ function Header() {
         if(pathname=='/')setshowmenu(false)
     },[pathname])
     return (
-        <>
-            <div className='lg:hidden bg-[#f8f8fa] w-full fixed top-0 left-0 h-12 flex space-x-2 justify-between items-center px-5 bg-transparent backdrop-blur-sm z-20'>
-                <div className='text-black text-xl'>{(pathname==="/")?<>Dashboard</>:(pathname==="/users")?<>Users</>:(pathname==="/personil")?<>Personil</>:(pathname==="/database")?<>Database</>:(pathname==="/monitoring")?<>Monitoring</>:<>Laporan</>}</div>
+        <div className="fixed top-0 right-0 lg:w-[77%] lg:mr-2">
+            <div className='lg:hidden bg-[#f8f8fa] w-full h-12 flex space-x-2 justify-between items-center px-5 bg-transparent backdrop-blur-sm z-20'>
+                <div className='text-black text-xl'>{(pathname==="/")?<>Dashboard</>:(pathname==="/users")?<>Users</>:(pathname==="/personil")?<>Personil</>:(pathname==="/database")?<>Database</>:(pathname==="/monitoring")?<>Monitoring</>:(pathname==="/piranti_lunak")?<>Piranti Lunak</>:(pathname==="/materill")?<>Materill</>:<>Laporan</>}</div>
                 
             </div>
-            <div className='lg:block hidden w-3/4 fixed top-0 right-0 h-20 lg:flex justify-between px-5 items-center bg-transparent backdrop-blur-sm'>
+            <div className='lg:block hidden w-full h-20 lg:flex justify-between px-5 items-center bg-transparent backdrop-blur-sm z-20'>
                 <div className='text-black text-xl font-bold w-96'>{
                 (pathname==="/")?<div className='flex-col'>
                     <div className='text-2xl'>Dashboard</div>
                     <p className='text-sm font-normal'>Selamat datang di Sistem Manajemen Satuan</p>
+                </div>
+                :(pathname==="/mrs")?<div className='flex-col'>
+                    <div className='text-2xl'>MRS</div>
+                    <p className='text-sm font-normal'>Medical Registry System</p>
+                </div>
+                :(pathname==="/sintelijen")?<div className='flex-col'>
+                    <div className='text-2xl'>Staff Intelijen</div>
+                    <p className='text-sm font-normal'>Organisasi</p>
+                </div>
+                :(pathname==="/soperasi")?<div className='flex-col'>
+                    <div className='text-2xl'>Staff Operasi</div>
+                    <p className='text-sm font-normal'>Organisasi</p>
+                </div>
+                :(pathname==="/slogistik")?<div className='flex-col'>
+                    <div className='text-2xl'>Staff Logistik</div>
+                    <p className='text-sm font-normal'>Organisasi</p>
+                </div>
+                :(pathname==="/sperencanaan")?<div className='flex-col'>
+                    <div className='text-2xl'>Staff Perencanaan</div>
+                    <p className='text-sm font-normal'>Organisasi</p>
+                </div>
+                :(pathname==="/materill")?<div className='flex-col'>
+                    <div className='text-2xl'>Materill</div>
+                    <p className='text-sm font-normal'>Data Inventaris</p>
+                </div>
+                :(pathname==="/piranti_lunak")?<div className='flex-col'>
+                    <div className='text-2xl'>Piranti Lunak</div>
+                    <p className='text-sm font-normal'>Interconnection Drive System</p>
                 </div>
                 :(pathname==="/users")?<div className='flex-col'>
                     <div className='text-2xl'>Users</div>
@@ -90,7 +118,7 @@ function Header() {
                     </figure>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

@@ -1,9 +1,11 @@
 import {ChevronLeftIcon,CameraIcon} from '@heroicons/react/outline'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {postPersonil} from '../../features/personilSlice'
-import {useDispatch} from 'react-redux'
+import { getSatuan } from '../../features/catandlapSlice'
+import {useDispatch,useSelector} from 'react-redux'
 function AddPersonil({handleAddshow}) {
     const dispatch = useDispatch()
+    const {satuan} = useSelector(state=>state.catandlap)
     const [data,setdata] = useState({
         nama:'',
         pangkat:'',
@@ -64,6 +66,9 @@ function AddPersonil({handleAddshow}) {
         dispatch(postPersonil({data:data,image:image}))
         handleAddshow()
     }
+    useEffect(()=>{
+        dispatch(getSatuan())
+    },[])
   return (
     <div className='flex flex-col w-full justify-start bg-white p-5 rounded-xl'>
         <input  type='file' hidden name="image" accept="image/*" ref={img} onChange={(e)=>{
@@ -75,7 +80,7 @@ function AddPersonil({handleAddshow}) {
             <ChevronLeftIcon className='text-red hover:text-hoveRed w-8 h-8' />
             <p className='text-red text-lg hover:text-hoveRed select-none'>Back</p>
         </div>
-        <div className='w-40 h-40 relative self-center z-0'>
+        <div className='w-40 h-40 relative self-center'>
             <img className='w-full h-full rounded-xl ' src={picture?picture:'https://via.placeholder.com/240x240?text=IMG'} />
             <div onClick={()=> img.current.click()} className=' cursor-pointer flex rounded-full absolute bottom-1 right-1 bg-black p-1'><CameraIcon className='w-5 h-5 text-white'/></div>
         </div>
@@ -150,7 +155,12 @@ function AddPersonil({handleAddshow}) {
             <div className='flex flex-col'>
                 <p className='font-poppins text-gray-500 text-lg'>Satuan</p>
                 <div className='rounded-md border border-[#ab54db] bg-white py-1 w-72 px-2'>
-                    <input type='text' className='outline-none w-full' value={data.satuan} onChange={(e)=> setdata({...data, satuan:e.target.value})}/>
+                    <select className='outline-none w-full' value={data.satuan} onChange={(e)=> setdata({...data, satuan:e.target.value})}>
+                        <option value="">--/--</option>
+                        {
+                            satuan?.map((val,index)=><option key={index+1} value={val.id}>{val.nama}</option>)
+                        }
+                    </select>
                 </div>
             </div>
             <div className='flex flex-col'>

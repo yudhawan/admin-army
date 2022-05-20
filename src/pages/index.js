@@ -8,22 +8,39 @@ import Database from "./Database";
 import Monitoring from './Monitoring'
 import Laporan from './Laporan'
 import NotFound from "./NotFound";
+import PirantiLunak from './PirantiLunak'
 import {PrivateRoute,PrivateElement} from '../hooks/PrivateRoute'
+import Materill from "./Materill";
+import StaffIntelijen from "./StaffIntelijen";
+import StaffOperasi from "./StaffOperasi";
+import StaffLogistik from "./StaffLogistik";
+import Mrs from "./Mrs";
+import StaffPerencanaan from "./StaffPerencanaan";
 
 function Main(){
     return(
-        <div className="lg:p-2 lg:flex lg:space-x-5">
+        <div className="lg:p-2 lg:flex lg:space-x-5 ">
             <Router>
+                <div className="flex justify-between w-full">
+                <div className="w-[20%] lg:ml-5">
+                    <PrivateElement>
+                        <TabMenu/>
+                    </PrivateElement>
+                </div>
+                <div className=" pb-20 lg:pb-0 mt-12 lg:mt-20 p-2 lg:p-0 lg:w-[75%] lg:h-full lg:mr-5">
                 <PrivateElement>
                     <Header />
                 </PrivateElement>
-                <PrivateElement>
-                    <TabMenu/>
-                </PrivateElement>
-                <div className="lg:pl-80  pb-20 lg:pb-0 mt-12 lg:mt-20 p-2 lg:p-0 lg:w-full lg:h-full">
                 <Routes>
                     <Route element={<PrivateRoute/>}>
                         <Route path='/' element={<Home/>} />
+                        <Route path='/mrs' element={<Mrs/>} />
+                        <Route path='/sintelijen' element={<StaffIntelijen/>}/>
+                        <Route path='/soperasi' element={<StaffOperasi/>}/>
+                        <Route path='/slogistik' element={<StaffLogistik/>}/>
+                        <Route path='/sperencanaan' element={<StaffPerencanaan/>}/>
+                        <Route path='/piranti_lunak' element={<PirantiLunak/>}/>
+                        <Route path='/materill' element={<Materill/>} />
                         <Route path='/users' element={<Users/>} />
                         <Route path='/personil' element={<Personil/> } />
                         <Route path='/database' element={<Database/>} />
@@ -32,6 +49,7 @@ function Main(){
                         <Route path='/*' element={<NotFound/>} />
                     </Route>
                 </Routes>
+                </div>
                 </div>
             </Router>
         </div>

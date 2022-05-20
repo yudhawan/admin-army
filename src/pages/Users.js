@@ -40,13 +40,13 @@ function Users() {
       {(status===501)?<div className='bg-rose-100 text-sm text-red px-2 w-fit'>Email pernah didaftarkan</div>:null}
       <div className='flex'>
         <table className='w-full text-left overflow-x-scroll'>
-            <thead className='flex w-full bg-white rounded-tr-md rounded-tl-md border-b border-gray-200'>
+            <thead className='flex w-full bg-red rounded-tr-md rounded-tl-md border-b border-gray-200'>
                 <tr className='flex w-full items-center py-3 px-4'>
                     {/* <th className='text-black w-[15vw] lg:w-[5%]'>No</th> */}
-                    <th className='text-black w-[50vw] lg:w-[30%]'>Nama</th>
-                    <th className='text-black w-[85vw] lg:w-[35%]'>Email</th>
-                    <th className='text-black w-[40vw] lg:w-[25%]'>No Hp</th>
-                    <th className='text-black w-[20vw] lg:w-[10%]'>Action</th>
+                    <th className='text-gray-100 w-[50vw] lg:w-[30%]'>Nama</th>
+                    <th className='text-gray-100 w-[85vw] lg:w-[35%]'>Email</th>
+                    <th className='text-gray-100 w-[40vw] lg:w-[25%]'>No Hp</th>
+                    <th className='text-gray-100 w-[20vw] lg:w-[10%]'>Action</th>
                 </tr>
             </thead>
             <tbody className='overflow-y-auto w-full h-[65vh] flex flex-col bg-white rounded-br-md rounded-bl-md'>

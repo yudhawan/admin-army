@@ -8,6 +8,7 @@ function AddUser({handleAddshow}) {
         nama:'',
         email:'',
         nohp:'',
+        role:'',
         password:'',
         picture:null,
     })
@@ -15,11 +16,12 @@ function AddUser({handleAddshow}) {
     const [picture,setpicture]=useState(null)
     const img = useRef()
     function cekValidation(){
-        if(user.nama=='') setvalidation('Nama tidak boleh kosong')
-        if(user.email=='') setvalidation('Email tidak boleh kosong')
-        if(user.nohp=='') setvalidation('Nomor HP tidak boleh kosong')
-        if(user.password=='') setvalidation('Password tidak boleh kosong')
-        if(picture==null) setvalidation('Foto tidak boleh kosong')
+        if(user.nama==='') return setvalidation('Nama tidak boleh kosong')
+        if(user.email==='') return setvalidation('Email tidak boleh kosong')
+        if(user.nohp==='') return setvalidation('Nomor HP tidak boleh kosong')
+        if(user.password==='') return setvalidation('Password tidak boleh kosong')
+        if(user.role==='') return setvalidation('Role tidak boleh kosong')
+        if(user.picture===null) return setvalidation('Foto tidak boleh kosong')
         return handleSubmit()
     }
     const handleSubmit=()=> {
@@ -68,11 +70,28 @@ function AddUser({handleAddshow}) {
                 </div>
             </div>
             <div className='flex flex-col'>
+                <p className='font-poppins text-gray-500 text-lg'>Role</p>
+                <div className='rounded-md border border-gray-400 bg-white py-1 w-72 px-2'>
+                    <select className='outline-none w-full' value={user.role} onChange={(e)=>setuser({...user, role:e.target.value})} >
+                        <option>---/---</option>
+                        <option value="intelijen">Staff Intelijen</option>
+                        <option value="logistik">Staff Logistik</option>
+                        <option value="operasional">Staff Operasional</option>
+                        <option value="perencanaan">Staff Intelijen</option>
+                        <option value="drive">Piranti Lunak</option>
+                        <option value="materill">Materill</option>
+                        <option value="medical">MRS</option>
+                        <option value="laporan">Laporan</option>
+                    </select>
+                </div>
+            </div>
+            <div className='flex flex-col'>
                 <p className='font-poppins text-gray-500 text-lg'>Password</p>
                 <div className='rounded-md border border-gray-400 bg-white py-1 w-72 px-2'>
                     <input type='password' className='outline-none w-full' placeholder='*********' value={user.password} onChange={(e)=>setuser({...user, password:e.target.value})} />
                 </div>
             </div>
+            {validation?<p className='text-red text-xs'>{validation}</p>:null}
             <button className='text-white bg-[#00a389] px-4 py-1 rounded-lg w-60' onClick={cekValidation}>Simpan</button>
         </form>
     </div>

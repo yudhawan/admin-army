@@ -15,7 +15,7 @@ function Home() {
     dispatch(getLaporan())
   },[])
   return (
-    <div className='flex flex-col justify-center p-4 w-full h-full space-y-3'>
+    <div className='flex flex-col justify-center w-full h-full space-y-3'>
       {/* chart 1 */}
       <div className='flex justify-start w-full h-auto space-x-7'>
         <div className='bg-white flex p-4 rounded-xl items-center space-x-3'>
@@ -40,6 +40,7 @@ function Home() {
           <BadgeCheckIcon className='text-green-500 w-7 h-7' />
         </div>
       </div>
+      {/* chart 2 */}
       <div className='flex space-x-2'>
         <div className='flex-col w-fit bg-white px-4 py-2 rounded-md'>
           <p>Laporan Minggu Ini</p>
@@ -77,6 +78,7 @@ function Home() {
             </div>
           </div>
         </div>
+        {/* chart 3 */}
         <div className='bg-white rounded-md px-4 py-2 flex flex-col justify-center items-center space-y-2'>
           <p>Grafik Personil</p>
           <div className='rotate-12 w-32 h-32 border-[20px] border-t-red border-r-yellow-500 border-b-green-500 border-l-transparent rounded-full'></div>
@@ -114,7 +116,7 @@ function Home() {
         <div className='flex w-full rounded-xl space-x-4'>
           {
             laporan.slice(0,3).map((val,index)=>(
-              <div className='bg-white rounded-xl p-3 flex-col space-y-2 w-60' key={index+1}>
+              <div className='bg-white rounded-xl p-3 flex-col space-y-2 w-56' key={index+1}>
                 <div className='flex space-x-2'>
                   <img className='w-6 h-6 rounded-lg' src={host+'/users/img/'+val.user?.picture} />
                   <p className='text-sm'>{val.user?.nama}</p>

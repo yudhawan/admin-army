@@ -83,7 +83,7 @@ function JenisLaporan() {
             {validation&&<div className='w-fit text-rose-600 text-sm bg-rose-100'>{validation}</div>}
             <div className='flex w-full '>
             <table className='w-full text-left overflow-x-scroll'>
-                <thead className='flex w-fit bg-white rounded-tr-md rounded-tl-md border-b border-gray-200'>
+                <thead className='flex w-fit bg-red rounded-tr-md rounded-tl-md border-b border-gray-200'>
                     <tr className='flex w-fit py-3 px-4 space-x-2'>
                         <th className='text-black w-10 lg:w-10'>No</th>
                         <th className='text-black w-20 lg:w-60'>Jenis Laporan</th>

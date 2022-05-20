@@ -51,11 +51,11 @@ function Kategori() {
             </form>
             <div className='flex w-full '>
             <table className='w-full text-left overflow-x-scroll'>
-                <thead className='flex w-fit bg-white rounded-tr-md rounded-tl-md border-b border-gray-200'>
+                <thead className='flex w-fit bg-red rounded-tr-md rounded-tl-md border-b border-gray-200'>
                     <tr className='flex w-fit py-3 px-4 space-x-2'>
-                        <th className='text-black w-[15vw] lg:w-10'>No</th>
-                        <th className='text-black w-[50vw] lg:w-40'>Kategori</th>
-                        <th className='text-black w-[20vw] lg:w-20'>Actions</th>
+                        <th className='text-gray-100 w-[15vw] lg:w-10'>No</th>
+                        <th className='text-gray-100 w-[50vw] lg:w-40'>Kategori</th>
+                        <th className='text-gray-100 w-[20vw] lg:w-20'>Actions</th>
                     </tr>
                 </thead>
                 <tbody className='overflow-y-auto w-full h-[50vh] flex flex-col bg-white rounded-br-md rounded-bl-md'>

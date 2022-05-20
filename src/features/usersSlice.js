@@ -18,6 +18,7 @@ export const postUsers = createAsyncThunk("users/postUsers", async (data,{getSta
     form.append('users',JSON.stringify({
         nama:data.nama,
         email:data.email,
+        role:data.role,
         nohp:data.nohp,
         password:data.password,
     }))
