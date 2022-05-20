@@ -6,6 +6,7 @@ import laporanReducer from './features/laporanSlice';
 import personilReducer from './features/personilSlice';
 import driveReducer from './features/driveSlice';
 import intelReducer from './features/intelSlice';
+import logReducer from './features/logSlice'
 export default configureStore({
     reducer:{
         auth:authReducer,
@@ -14,7 +15,8 @@ export default configureStore({
         users:usersReducer,
         personil:personilReducer,
         drive:driveReducer,
-        intel:intelReducer
+        intel:intelReducer,
+        log:logReducer
     },
     devTools:false
 })
