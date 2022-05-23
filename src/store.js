@@ -7,6 +7,9 @@ import personilReducer from './features/personilSlice';
 import driveReducer from './features/driveSlice';
 import intelReducer from './features/intelSlice';
 import logReducer from './features/logSlice'
+import opsReducer from './features/opsSlice'
+import renReducer from './features/renSlice'
+import materillReducer from './features/materillSlice'	
 export default configureStore({
     reducer:{
         auth:authReducer,
@@ -16,7 +19,10 @@ export default configureStore({
         personil:personilReducer,
         drive:driveReducer,
         intel:intelReducer,
-        log:logReducer
+        log:logReducer,
+        ops:opsReducer,
+        ren:renReducer,
+        materill:materillReducer
     },
-    devTools:false
+    // devTools:false
 })

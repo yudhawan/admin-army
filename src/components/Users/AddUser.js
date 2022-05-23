@@ -77,7 +77,7 @@ function AddUser({handleAddshow}) {
                         <option value="intelijen">Staff Intelijen</option>
                         <option value="logistik">Staff Logistik</option>
                         <option value="operasional">Staff Operasional</option>
-                        <option value="perencanaan">Staff Intelijen</option>
+                        <option value="perencanaan">Staff Perencanaan</option>
                         <option value="drive">Piranti Lunak</option>
                         <option value="materill">Materill</option>
                         <option value="medical">MRS</option>
