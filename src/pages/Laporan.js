@@ -139,7 +139,7 @@ function Laporan() {
                   }
                 </td>
                 <td className='h-auto w-[20vw] lg:w-20 flex space-x-1 relative'>
-                  <PrinterIcon className='text-orange-100 w-5 h-5 cursor-pointer' onClick={()=>{
+                  <PrinterIcon className='text-rose-400 w-5 h-5 cursor-pointer' onClick={()=>{
                     if(showmenu) setshowmenu(0)
                     if(!showmenu) setshowmenu(item.id)
                   }}/>

@@ -2,14 +2,15 @@ import {SearchIcon,TrashIcon,} from '@heroicons/react/outline'
 import { useEffect, useState } from 'react'
 import { useDispatch,useSelector } from 'react-redux'
 import EditMrs from '../components/MRS/EditMrs'
-import host from '../features/host'
+import {getData,deleteData} from '../features/mrsSlice'
 function Mrs() {
   const dispatch = useDispatch()
   const [editshow,seteditshow]=useState(0)
+  const {mrs,loading} = useSelector(state=>state.mrs)
   const [search,setsearch]=useState('')
   const handleEdit=()=> seteditshow(0)
   useEffect(()=>{
-    
+    dispatch(getData())
   },[])
   return (
     <div className='flex flex-col w-full h-full space-y-5'>
@@ -24,7 +25,6 @@ function Mrs() {
         </div>
         <div className='text-gray-400 hidden lg:block'>0 Users</div>
         </div>
-      {false?<div className='bg-rose-100 text-sm text-red px-2 w-fit'>Email pernah didaftarkan</div>:null}
       <div className='flex'>
         <table className='w-full text-left overflow-x-scroll'>
             <thead className='flex w-full bg-red rounded-tr-md rounded-tl-md border-b border-gray-200'>
@@ -38,13 +38,15 @@ function Mrs() {
             </thead>
             <tbody className='overflow-y-auto w-full h-[65vh] flex flex-col bg-white rounded-br-md rounded-bl-md'>
               
-                <tr className="flex w-full lg:w-full items-center py-3 px-4 border-b border-gray-100 h-auto">
-                    <td className='h-auto w-[15vw] lg:w-10'></td>
-                    <td className='h-auto w-[50vw] lg:w-60 text-sm'></td>
-                    <td className='h-auto w-[85vw] lg:w-72 text-sm line-clamp-2'></td>
-                    <td className='h-auto w-[40vw] lg:w-60 text-sm line-clamp-2'></td>
-                    <td className='h-auto w-[20vw] lg:w-20 text-sm'></td>
-                </tr>
+               {mrs.filter(val => val.nama.toLowerCase().includes(search.toLowerCase())).map((item,index)=> <tr key={index+1} className="flex w-full lg:w-full items-center py-3 px-4 border-b border-gray-100 h-auto">
+                    <td className='h-auto w-[15vw] lg:w-10'>{index+1}</td>
+                    <td className='h-auto w-[50vw] lg:w-60 text-sm'>{item.nama}</td>
+                    <td className='h-auto w-[85vw] lg:w-72 text-sm line-clamp-2'>{item.diagnosis}</td>
+                    <td className='h-auto w-[40vw] lg:w-60 text-sm line-clamp-2'>{item.waktuKontrolUlang}</td>
+                    <td className='h-auto w-[20vw] lg:w-20 text-sm'>
+                      <TrashIcon className='text-red-500 w-6 h-6' onClick={()=>dispatch(deleteData(item.id))} />
+                    </td>
+                </tr>)}
                 
             </tbody>
         </table>

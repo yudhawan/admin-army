@@ -10,6 +10,7 @@ import logReducer from './features/logSlice'
 import opsReducer from './features/opsSlice'
 import renReducer from './features/renSlice'
 import materillReducer from './features/materillSlice'	
+import mrsReducer from './features/mrsSlice'
 export default configureStore({
     reducer:{
         auth:authReducer,
@@ -22,7 +23,8 @@ export default configureStore({
         log:logReducer,
         ops:opsReducer,
         ren:renReducer,
-        materill:materillReducer
+        materill:materillReducer,
+        mrs:mrsReducer,
     },
-    // devTools:false
+    devTools:false
 })
