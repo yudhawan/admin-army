@@ -2,6 +2,8 @@ import {SearchIcon,TrashIcon,} from '@heroicons/react/outline'
 import { useEffect, useState } from 'react'
 import { useDispatch,useSelector } from 'react-redux'
 import EditMrs from '../components/MRS/EditMrs'
+import ChartBar from '../components/MRS/ChartBar'
+import Maintenance from '../components/MRS/Maintenance'
 import {getData,deleteData} from '../features/mrsSlice'
 function Mrs() {
   const dispatch = useDispatch()
@@ -15,16 +17,26 @@ function Mrs() {
   return (
     <div className='flex flex-col w-full h-full space-y-5'>
       
-      {editshow?<EditMrs handleEdit={handleEdit} id={editshow} />:<><div className='flex w-full items-center space-x-2'>
-        
-        <div className='flex flex-col lg:flex-row lg:space-x-10'>
-          <div className='flex justify-center items-center border border-gray-400 rounded-md px-2 py-1 space-x-1'>
-            <SearchIcon className='text-gray-400 w-6 h-6' />
-            <input type="text" placeholder='Search...' className='w-full outline-none bg-transparent' value={search} onChange={(e)=>setsearch(e.target.value)} />
+      {editshow?<EditMrs handleEdit={handleEdit} id={editshow} />:<div className='flex flex-col space-y-2 lg:space-y-4'>
+      <div className='flex w-full space-x-4'>
+        <Maintenance/>
+      </div>
+      <ChartBar/>
+      <div className='flex w-full items-center space-x-2'>
+          <div className='flex space-x-2'>
+            <div className='flex space-x-1 border border-gray-400 rounded-lg p-2 w-96 items-center'>
+              <SearchIcon className='w-6 h-6 text-gray-400'/>
+              <input className='outline-none w-full text-gray-500 bg-transparent' type="text" placeholder='Search...' value={search} onChange={(e)=>setsearch(e.target.value)} />
+            </div>
           </div>
-        </div>
-        <div className='text-gray-400 hidden lg:block'>0 Users</div>
-        </div>
+          {/* <div className='flex flex-col lg:flex-row lg:space-x-10'>
+            <div className='flex justify-center items-center border border-gray-400 rounded-md px-2 py-1 space-x-1'>
+              <SearchIcon className='text-gray-400 w-6 h-6' />
+              <input type="text" placeholder='Search...' className='w-full outline-none bg-transparent' value={search} onChange={(e)=>setsearch(e.target.value)} />
+            </div>
+          </div> */}
+          <div className='text-gray-400 hidden lg:block'>0 Users</div>
+      </div>
       <div className='flex'>
         <table className='w-full text-left overflow-x-scroll'>
             <thead className='flex w-full bg-red rounded-tr-md rounded-tl-md border-b border-gray-200'>
@@ -40,17 +52,17 @@ function Mrs() {
               
                {mrs.filter(val => val.nama.toLowerCase().includes(search.toLowerCase())).map((item,index)=> <tr key={index+1} className="flex w-full lg:w-full items-center py-3 px-4 border-b border-gray-100 h-auto">
                     <td className='h-auto w-[15vw] lg:w-10'>{index+1}</td>
-                    <td className='h-auto w-[50vw] lg:w-60 text-sm'>{item.nama}</td>
+                    <td className='h-auto w-[50vw] lg:w-60 text-sm font-semibold'>{item.nama}</td>
                     <td className='h-auto w-[85vw] lg:w-72 text-sm line-clamp-2'>{item.diagnosis}</td>
-                    <td className='h-auto w-[40vw] lg:w-60 text-sm line-clamp-2'>{item.waktuKontrolUlang}</td>
+                    <td className='h-auto w-[40vw] lg:w-60 text-sm line-clamp-2'>{new Date(item.waktuKontrolUlang).toLocaleDateString()}</td>
                     <td className='h-auto w-[20vw] lg:w-20 text-sm'>
-                      <TrashIcon className='text-red-500 w-6 h-6' onClick={()=>dispatch(deleteData(item.id))} />
+                      <TrashIcon className='text-rose-500 w-6 h-6 cursor-pointer' onClick={()=>dispatch(deleteData(item.id))} />
                     </td>
                 </tr>)}
                 
             </tbody>
         </table>
-      </div></>}
+      </div></div>}
     </div>
   )
 }

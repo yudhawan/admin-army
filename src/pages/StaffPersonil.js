@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import {SearchIcon,CalendarIcon,DownloadIcon,FolderIcon} from '@heroicons/react/outline'
+import {SearchIcon,CalendarIcon,DownloadIcon,FolderIcon,DotsVerticalIcon} from '@heroicons/react/outline'
 import {useDispatch,useSelector} from 'react-redux'
-import {downloadFile,getDir,getFiles} from '../features/renSlice'
-function StaffPerencanaan() {
-    const dispatch = useDispatch()
-    const [opendir,setopendir] = useState(0)
-    const [openfile,setopenfile] = useState(null)
-    const {files,dir,loading} = useSelector(state=>state.ren)
-    const [search,setsearch] = useState('')
+import {downloadFile,getDir,getFiles} from '../features/personilSlice'
+function StaffPersonil(){
+  const dispatch = useDispatch()
+  const [opendir,setopendir] = useState(0)
+  const [openfile,setopenfile] = useState(null)
+  const {dir,files,loading} = useSelector(state=>state.personil)
+  const [search,setsearch] = useState('')
   const [action,setaction]=useState(null)
+  const [validation,setvalidation]=useState('')
   useEffect(()=>{
     dispatch(getFiles())
     dispatch(getDir())
-},[])
+  },[])
   return (
     <div className='flex flex-col space-y-2 lg:space-y-5 w-full'>
       <div className='flex flex-col lg:flex-row space-x-1 lg:space-x-2 w-full items-center'>
@@ -28,7 +29,8 @@ function StaffPerencanaan() {
                 setopenfile(null)
                 setaction(null)
                 }}>Home</p>}
-            <p className='text-sm text-orange-600 bg-orange-100 px-1 rounded-sm w-fit'>{dir?.filter(val=> val.parent==opendir)?.length} Folders </p>
+            {validation&&<p className='text-rose-600 font-semibold text-sm'>{validation}</p>}
+            {!validation&&<p className='text-sm text-orange-600 bg-orange-100 px-1 rounded-sm w-fit'>{dir?.filter(val=> val.parent==opendir)?.length} Folders </p>}
         </div>
         <div className='flex flex-wrap gap-4 w-full h-full border-t border-slate-200 py-2 lg:py-5 justify-center'>
             {
@@ -38,13 +40,10 @@ function StaffPerencanaan() {
                     <div className='w-24 h-4 bg-gray-300 animate-pulse self-start'></div>
                     <div className='w-20 h-4 bg-gray-300 animate-pulse self-start'></div>
                 </div>):
-                dir?.filter(value=> value.parent==opendir).filter(value=> value.nama.toLowerCase().includes(search.toLowerCase())).map((items,index)=>{
+                dir?.filter(value=> value.parent==opendir).filter(val => val.nama.toLowerCase().includes(search.toLowerCase())).map((items,index)=>{
                 let date = new Date(items.updatedAt).toISOString().substring(0,10)
                 return(
-                <div key={index+1} className='flex flex-col justify-center p-2 items-center w-44 h-52 border border-gray-200 hover:border-blue-300 rounded-lg ' onDoubleClick={()=>{
-                    setopendir(items.id)
-                    setopenfile(items.id)
-                }}>
+                <div key={index+1} className='flex flex-col justify-center p-2 items-center w-44 h-52 border border-gray-200 hover:border-blue-300 rounded-lg' onDoubleClick={()=>setopendir(items.id)}>
                 <FolderIcon className='h-36 w-36 text-orange-500' />
                 <h5 className='text-gray-600 text-xs font-semibold line-clamp-1 self-start'>{items.nama}</h5>
                 <div className="flex space-x-1 self-start items-center mt-1">
@@ -57,7 +56,7 @@ function StaffPerencanaan() {
         </div>
         </div>
         <div>
-        <p className='text-gray-600 text-sm bg-gray-200 px-1 rounded-sm w-fit'>{files?.filter(val => val.directoryId==openfile)?.length} Files</p>
+        <p className='text-gray-600 text-sm bg-gray-200 px-1 rounded-sm w-fit'>{files?.filter(val => val.directoryId==parseInt(opendir))?.length} Files</p>
         <div className='flex flex-wrap gap-4 w-full h-full border-t border-slate-200 py-2 lg:py-5 justify-center'>
             {
                 loading?
@@ -66,10 +65,13 @@ function StaffPerencanaan() {
                     <div className='w-24 h-4 bg-gray-300 animate-pulse self-start'></div>
                     <div className='w-20 h-4 bg-gray-300 animate-pulse self-start'></div>
                 </div>):
-                files?.filter(val => val.directoryId==openfile).filter(value=> value.originalName.toLowerCase().includes(search.toLowerCase())).map((items,index)=>{
+                files?.filter(val => val.directoryId==opendir).filter(value=> value.originalName.toLowerCase().includes(search.toLowerCase())).map((items,index)=>{
                 let extension = items.originalName.split('.').pop()
                 let date = new Date(items.createdAt).toISOString().substring(0,10)
-                return(<div key={index+1} className='flex flex-col justify-center p-2 items-center w-44 h-52 border border-gray-200 hover:border-blue-300 rounded-lg cursor-pointer' onClick={()=>setaction(items.id)}>
+                return(<div key={index+1} className='flex flex-col justify-center p-2 items-center w-44 h-52 border border-gray-200 hover:border-blue-300 rounded-lg cursor-pointer' onClick={()=>{
+                    setaction(items.id)
+                    setopenfile(items.id)
+                    }}>
                 <div className='w-36 h-36 flex justify-center items-center bg-gray-500 rounded-lg'>
                     {
                         (action===items.id)?<div className='relative flex flex-col space-y-4 bg-gray-500 rounded-lg'>
@@ -95,4 +97,4 @@ function StaffPerencanaan() {
   )
 }
 
-export default StaffPerencanaan
+export default StaffPersonil

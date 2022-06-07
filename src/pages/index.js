@@ -16,7 +16,7 @@ import StaffOperasi from "./StaffOperasi";
 import StaffLogistik from "./StaffLogistik";
 import Mrs from "./Mrs";
 import StaffPerencanaan from "./StaffPerencanaan";
-
+import StaffPersonil from "./StaffPersonil";
 function Main(){
     return(
         <div className="lg:p-2 lg:flex lg:space-x-5 ">
@@ -36,6 +36,7 @@ function Main(){
                         <Route path='/' element={<Home/>} />
                         <Route path='/mrs' element={<Mrs/>} />
                         <Route path='/sintelijen' element={<StaffIntelijen/>}/>
+                        <Route path='/spersonil' element={<StaffPersonil/>}/>
                         <Route path='/soperasi' element={<StaffOperasi/>}/>
                         <Route path='/slogistik' element={<StaffLogistik/>}/>
                         <Route path='/sperencanaan' element={<StaffPerencanaan/>}/>

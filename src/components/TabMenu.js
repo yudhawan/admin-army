@@ -36,6 +36,10 @@ function TabMenu() {
                                 <PuzzleIcon className={`w-4 h-4 ${(pathname==='/sintelijen')?'text-[#db5454]':'text-gray-500'} text-gray-500`}/>
                                 <div className={`${(pathname==='/sintelijen')?'text-[#db5454]':'text-black'} font-medium`}>Staff Intelijen</div>
                             </div>
+                            <div className={`flex space-x-3 cursor-pointer ${(pathname==='/spersonil')?'bg-[#f4dfe1]':''} rounded-xl px-2 py-2 justify-start items-center`} onClick={()=> navigate('/spersonil')}>
+                                <CollectionIcon className={`w-4 h-4 ${(pathname==='/spersonil')?'text-[#db5454]':'text-gray-500'} text-gray-500`}/>
+                                <div className={`${(pathname==='/spersonil')?'text-[#db5454]':'text-black'} font-medium`}>Staff Personil</div>
+                            </div>
                             <div className={`flex space-x-3 cursor-pointer ${(pathname==='/soperasi')?'bg-[#f4dfe1]':''} rounded-xl px-2 py-2 justify-start items-center`} onClick={()=> navigate('/soperasi')}>
                                 <StatusOnlineIcon className={`w-4 h-4 ${(pathname==='/soperasi')?'text-[#db5454]':'text-gray-500'} text-gray-500`}/>
                                 <div className={`${(pathname==='/soperasi')?'text-[#db5454]':'text-black'} font-medium`}>Staff Operasi</div>

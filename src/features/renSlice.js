@@ -13,6 +13,26 @@ export const getDrive = createAsyncThunk('smbren/getDrive',
         return response.data;
     }
 );
+export const getDir=createAsyncThunk('smbren/getDir',async (payload,{getState})=>{
+    const response = await axios({
+        method: "get",
+        url:host+"/admin/dir/perencanaan",
+        headers:{
+            "authorization":"Bearer "+getState().auth.token
+        },
+    });
+    return response.data;
+})
+export const getFiles=createAsyncThunk('smbren/getFiles',async (payload,{getState})=>{
+    const response = await axios({
+        method: "get",
+        url:host+"/admin/ren",
+        headers:{
+            "authorization":"Bearer "+getState().auth.token
+        },
+    });
+    return response.data;
+})
 export const downloadFile = createAsyncThunk(
     "smbren/downloadFile",
     async (payload, {dispatch}) => {
@@ -42,6 +62,8 @@ const renSlice = createSlice({
         ren: [],
         loading: false,
         error: null,
+        files:[],
+        dir:[]
     },
     extraReducers:{
         [getDrive.pending]: (state, action) => {
@@ -58,7 +80,27 @@ const renSlice = createSlice({
         [downloadFile.fulfilled]: (state, action) => {
             state.loading = false;
         },
-        
+        [getDir.pending]: (state, action) => {
+            state.loading = true;
+        },
+        [getDir.fulfilled]: (state, action) => {
+            state.dir = action.payload;
+            state.loading = false;
+        },
+        [getDir.rejected]: (state, action) => {
+            state.error = action.error.message;
+            state.loading = false;
+        },
+        [getFiles.pending]: (state)=>{
+            state.loading = true;
+        },
+        [getFiles.fulfilled]:(state,action)=>{ 
+            state.files = action.payload
+            state.loading=false
+        },
+        [getFiles.rejected]:(state,action)=>{
+            state.error = action.error
+        },
     }
 });
 

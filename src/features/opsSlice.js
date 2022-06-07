@@ -35,13 +35,34 @@ export const downloadFile = createAsyncThunk(
         return
     }
 );
-
+export const getDir=createAsyncThunk('smbops/getDir',async (payload,{getState})=>{
+    const response = await axios({
+        method: "get",
+        url:host+"/admin/dir/operasional",
+        headers:{
+            "authorization":"Bearer "+getState().auth.token
+        },
+    });
+    return response.data;
+})
+export const getFiles=createAsyncThunk('smbops/getFiles',async (payload,{getState})=>{
+    const response = await axios({
+        method: "get",
+        url:host+"/admin/ops",
+        headers:{
+            "authorization":"Bearer "+getState().auth.token
+        },
+    });
+    return response.data;
+})
 const opsSlice = createSlice({
     name: 'smbops',
     initialState: {
         ops: [],
         loading: false,
         error: null,
+        files:[],
+        dir:[]
     },
     extraReducers:{
         [getDrive.pending]: (state, action) => {
@@ -58,7 +79,27 @@ const opsSlice = createSlice({
         [downloadFile.fulfilled]: (state, action) => {
             state.loading = false;
         },
-        
+        [getDir.pending]: (state, action) => {
+            state.loading = true;
+        },
+        [getDir.fulfilled]: (state, action) => {
+            state.dir = action.payload;
+            state.loading = false;
+        },
+        [getDir.rejected]: (state, action) => {
+            state.error = action.error.message;
+            state.loading = false;
+        },
+        [getFiles.pending]: (state)=>{
+            state.loading = true;
+        },
+        [getFiles.fulfilled]:(state,action)=>{ 
+            state.files = action.payload
+            state.loading=false
+        },
+        [getFiles.rejected]:(state,action)=>{
+            state.error = action.error
+        },
     }
 });
 

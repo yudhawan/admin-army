@@ -5,7 +5,7 @@ import host from './host'
 export const getData = createAsyncThunk('mrsSlice/getData', async (payload,{getState}) => {
     const response = await axios({
         method: 'get',
-        url:`${host}/mrs/admin`,
+        url:`${host}/medical/admin`,
         headers: {
             'Authorization': `Bearer ${getState().auth.token}`
         }
@@ -16,7 +16,7 @@ export const getData = createAsyncThunk('mrsSlice/getData', async (payload,{getS
 export const deleteData = createAsyncThunk('mrsSlice/deleteData', async (payload,{getState,dispatch}) => {
     await axios({
         method: 'delete',
-        url:`${host}/mrs/admin`,
+        url:`${host}/medical/admin`,
         headers: {
             'Authorization': `Bearer ${getState().auth.token}`
         },
