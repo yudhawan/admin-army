@@ -18,7 +18,7 @@ function Header() {
     return (
         <div className="fixed top-0 right-0 lg:w-[77%] lg:mr-2 z-10">
             <div className='lg:hidden bg-[#f8f8fa] w-full h-12 flex space-x-2 justify-between items-center px-5 bg-transparent backdrop-blur-sm z-20'>
-                <div className='text-black text-xl'>{(pathname==="/")?<>Dashboard</>:(pathname==="/users")?<>Users</>:(pathname==="/personil")?<>Personil</>:(pathname==="/database")?<>Database</>:(pathname==="/monitoring")?<>Monitoring</>:(pathname==="/piranti_lunak")?<>Piranti Lunak</>:(pathname==="/materill")?<>Materill</>:<>Laporan</>}</div>
+                <div className='text-black text-xl'>{(pathname==="/")?<div>Dashboard</div>:(pathname==="/users")?<div>Users</div>:(pathname==="/personil")?<div>Personil</div>:(pathname==="/database")?<div>Database</div>:(pathname==="/monitoring")?<div>Monitoring</div>:(pathname==="/piranti_lunak")?<div>Piranti Lunak</div>:(pathname==="/materill")?<div>Materill</div>:<div>Laporan</div>}</div>
                 
             </div>
             <div className='lg:block hidden w-full h-20 lg:flex justify-between px-5 items-center bg-transparent backdrop-blur-sm z-20'>

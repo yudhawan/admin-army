@@ -4,7 +4,6 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 function Maintenance() {
     const [tgl,settgl] = useState(new Date());
-    console.log(tgl)
   return (
     <div className='flex w-full h-80 space-x-3 overflow-x-auto'>
         <div className='flex-col w-[35rem] bg-white rounded-xl p-4 space-y-3'>
