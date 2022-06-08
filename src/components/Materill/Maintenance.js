@@ -86,7 +86,7 @@ function Maintenance() {
             </div>
         </div>
         <div></div>
-        <div className='bg-white rounded-lg p-2 items-center flex w-[22rem] h-full'><Calendar className='w-full h-full' onChange={settgl} value={tgl} /></div>
+        <div className='bg-white rounded-xl p-2 items-center flex w-[22rem] h-full'><Calendar className='w-full h-full rounded-xl' onChange={settgl} value={tgl} /></div>
         <div className='flex-col space-y-4 flex items-center w-ful h-full'>
             <div className='rounded-full bg-white p-2 rotate-45 -z-10'><ArrowUpIcon className='text-gray-600 w-6 h-6' /></div>
             <div className='flex space-x-2'>

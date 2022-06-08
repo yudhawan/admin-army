@@ -27,7 +27,7 @@ function Main(){
                         <TabMenu/>
                     </PrivateElement>
                 </div>
-                <div className=" pb-20 lg:pb-0 mt-12 lg:mt-20 p-2 lg:p-0 lg:w-[75%] lg:h-full lg:mr-5">
+                <div className="pb-0 lg:pb-0 mt-12 lg:mt-20 p-2 lg:p-0 lg:w-[75%] lg:h-full lg:mr-5">
                 <PrivateElement>
                     <Header />
                 </PrivateElement>

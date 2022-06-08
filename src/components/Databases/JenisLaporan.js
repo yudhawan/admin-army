@@ -91,7 +91,7 @@ function JenisLaporan() {
                         <th className='text-black w-20 lg:w-20'>Actions</th>
                     </tr>
                 </thead>
-                <tbody className='overflow-y-auto w-full h-[65vh] flex flex-col bg-white rounded-br-md rounded-bl-md'>
+                <tbody className='overflow-y-auto w-full h-full flex flex-col bg-white rounded-br-md rounded-bl-md'>
                     {
                         jenisLaporan&&jenisLaporan.map((item,index)=> (
                         <tr key={index+1} className="flex w-fit py-3 px-4 border-b border-gray-100 h-12 space-x-2">

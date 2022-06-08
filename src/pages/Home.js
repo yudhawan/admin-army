@@ -196,7 +196,7 @@ function Home() {
           </div>
         </div>
         <div className='flex flex-wrap gap-2'>
-          <div className='flex flex-col w-36 space-y-2 justify-center items-center h-auto bg-white rounded-lg p-4'>
+          <div className='flex flex-col w-36 space-y-2 justify-center items-center h-auto bg-white rounded-lg p-4 cursor-pointer' onClick={()=> navigate('/materill')}>
             <div className='rounded-md bg-gradient-to-tl from-[#8a19e0] to-[#c01bcf] px-3 py-2'><LibraryIcon className='w-5 h-5 text-white' /></div>
             <p className='text-gray-600 line-clamp-1 font-bold'>RANTIS</p>
             <p className='text-gray-400 text-xs'>SIAP GERAK</p>

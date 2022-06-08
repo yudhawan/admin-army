@@ -200,13 +200,154 @@ export const updateJenisLaporan = createAsyncThunk(
     }
 );
 
-
+export const getKeterangan = createAsyncThunk(
+    "catandlap/getKeterangn",
+    async (arg,{getState}) => {
+        const result = await axios({
+            method: "get",
+            url: host+"/admin/keterangan",
+            headers:{
+                "authorization": "Bearer "+getState().auth.token
+            },
+        });
+        return result.data;
+    }
+);
+export const postKeterangan = createAsyncThunk(
+    "catandlap/postKeterangn",
+    async (data,{getState,dispatch}) => {
+        try {
+            const result = await axios({
+                method: "post",
+                url: host+"/admin/keterangan",
+                headers:{
+                    "authorization": "Bearer "+getState().auth.token
+                },
+                data: {keterangan:data.ket, subketerangan:data.sub, status:data.status},
+            });
+            dispatch(getKeterangan());
+            return result.data;
+        } catch (error) {
+            return error
+        }
+    }
+);
+export const deleteKeterangan = createAsyncThunk(
+    "catandlap/deleteKeterangan",
+    async (id,{dispatch,getState}) => {
+        try {
+            const result = await axios({
+                method: "delete",
+                url: host+"/admin/keterangan",
+                headers:{
+                    "authorization": "Bearer "+getState().auth.token
+                },
+                data: {id:id},
+            });
+            dispatch(getKeterangan());
+            return result.data;
+        } catch (error) {
+            return error
+        }
+    }
+);
+export const updateKeterangan = createAsyncThunk(
+    "catandlap/updateKeterangan",
+    async (data,{dispatch,getState}) => {
+        try {
+            const result = await axios({
+                method: "put",
+                url: host+"/admin/keterangan",
+                headers:{
+                    "authorization": "Bearer "+getState().auth.token
+                },
+                data: {id:data.id, data:{keterangan:data.ket}},
+            });
+            dispatch(getKeterangan());
+            return result.data;
+        } catch (error) {
+            return error
+        }
+    }
+);
+export const getSubKeterangan = createAsyncThunk(
+    "catandlap/getSubKeterangn",
+    async (arg,{getState}) => {
+        const result = await axios({
+            method: "get",
+            url: host+"/admin/keterangan/sub",
+            headers:{
+                "authorization": "Bearer "+getState().auth.token
+            },
+        });
+        return result.data;
+    }
+);
+export const postSubKeterangan = createAsyncThunk(
+    "catandlap/postSubKeterangn",
+    async (data,{getState,dispatch}) => {
+        try {
+            const result = await axios({
+                method: "post",
+                url: host+"/admin/keterangan/sub",
+                headers:{
+                    "authorization": "Bearer "+getState().auth.token
+                },
+                data: data
+            });
+            dispatch(getSubKeterangan());
+            return result.data;
+        } catch (error) {
+            return error
+        }
+    }
+);
+export const deleteSubKeterangan = createAsyncThunk(
+    "catandlap/deleteSubKeterangan",
+    async (id,{dispatch,getState}) => {
+        try {
+            const result = await axios({
+                method: "delete",
+                url: host+"/admin/keterangan/sub",
+                headers:{
+                    "authorization": "Bearer "+getState().auth.token
+                },
+                data: {id:id},
+            });
+            dispatch(getSubKeterangan());
+            return result.data;
+        } catch (error) {
+            return error
+        }
+    }
+);
+export const updateSubKeterangan = createAsyncThunk(
+    "catandlap/updateSubKeterangan",
+    async (data,{dispatch,getState}) => {
+        try {
+            const result = await axios({
+                method: "put",
+                url: host+"/admin/keterangan/sub",
+                headers:{
+                    "authorization": "Bearer "+getState().auth.token
+                },
+                data: {id:data.id, data:{subketerangan:data.sub}},
+            });
+            dispatch(getSubKeterangan());
+            return result.data;
+        } catch (error) {
+            return error
+        }
+    }
+);
 const catandlapSlice = createSlice({
     name: "catandlap",
     initialState: {
         categories: [],
         jenisLaporan: [],
         satuan:[],
+        keterangan:[],
+        subKeterangan:[],
         message: "",
         status:null,
         loading: false,
@@ -373,8 +514,110 @@ const catandlapSlice = createSlice({
             state.loading = false;
             state.error = action.error.message;
             state.status = action.payload.status;
-        }
-
+        },
+        [getKeterangan.pending]: (state) => {
+            state.loading = true;
+        },
+        [getKeterangan.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.keterangan = action.payload;
+        },
+        [getKeterangan.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.error.message;
+            state.status = action.payload.status;
+        },
+        [postKeterangan.pending]: (state) => {
+            state.loading = true;
+        },
+        [postKeterangan.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.message = action.payload.message;
+            state.status = action.payload.status;
+        },
+        [postKeterangan.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.error.message;
+            state.status = action.payload.status;
+        },
+        [deleteKeterangan.pending]: (state, action) => {
+            state.loading = true;
+        },
+        [deleteKeterangan.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.message = action.payload.message;
+            state.status = action.payload.status;
+        },
+        [deleteKeterangan.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.error.message;
+            state.status = action.payload.status;
+        },
+        [updateKeterangan.pending]: (state) => {
+            state.loading = true;
+        },
+        [updateKeterangan.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.message = action.payload.message;
+            state.status = action.payload.status;
+        },
+        [updateKeterangan.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.error.message;
+            state.status = action.payload.status;
+        },
+        [getSubKeterangan.pending]: (state) => {
+            state.loading = true;
+        },
+        [getSubKeterangan.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.subKeterangan = action.payload;
+        },
+        [getSubKeterangan.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.error.message;
+            state.status = action.payload.status;
+        },
+        [postSubKeterangan.pending]: (state) => {
+            state.loading = true;
+        },
+        [postSubKeterangan.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.message = action.payload.message;
+            state.status = action.payload.status;
+        },
+        [postSubKeterangan.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.error.message;
+            state.status = action.payload.status;
+        },
+        [deleteSubKeterangan.pending]: (state, action) => {
+            state.loading = true;
+        },
+        [deleteSubKeterangan.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.message = action.payload.message;
+            state.status = action.payload.status;
+        },
+        [deleteSubKeterangan.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.error.message;
+            state.status = action.payload.status;
+        },
+        [updateSubKeterangan.pending]: (state) => {
+            state.loading = true;
+        },
+        [updateSubKeterangan.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.message = action.payload.message;
+            state.status = action.payload.status;
+        },
+        [updateSubKeterangan.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.error.message;
+            state.status = action.payload.status;
+        },
+        
     }
 })
 

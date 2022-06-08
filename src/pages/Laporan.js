@@ -50,7 +50,7 @@ function Laporan() {
     dispatch(getJenisLaporan())
   },[])
   return (
-    <div className='flex flex-col w-full h-full space-y-5 '>
+    <div className='flex flex-col w-full h-auto space-y-5 '>
       {detailshow.show?<DetailLaporan handleDetailshow={handleDetailshow} id={detailshow.id}/>:<><div className='flex justify-start w-full pr-10 space-x-1'>
         <div className='flex flex-col lg:flex-row lg:space-x-2 '>
           <div className='flex justify-center items-center border border-yellow-400 rounded-lg px-3 bg-orange-500 h-fit py-2'>
