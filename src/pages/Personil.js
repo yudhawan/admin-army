@@ -1,6 +1,7 @@
 import {PlusIcon,SearchIcon,TrashIcon,PencilIcon, DotsVerticalIcon,PhoneIcon, BriefcaseIcon,MailIcon,ShieldCheckIcon, FireIcon} from '@heroicons/react/outline'
 import { useEffect, useState } from 'react'
 import {getPersonil,deletePersonil} from '../features/personilSlice'
+import {getSatuan} from '../features/catandlapSlice'
 import { useDispatch,useSelector } from 'react-redux'
 import AddPersonil from '../components/Personil/AddPersonil'
 import EditPersonil from '../components/Personil/EditPersonil'
@@ -9,7 +10,9 @@ import host from '../features/host'
 function Personil() {
   const dispatch = useDispatch()
   const {personil,loading} = useSelector(state=>state.personil)
+  const {satuan} = useSelector(state=>state.catandlap)
   const [search,setsearch] = useState("")
+  const [filterSatuan,setFilterSatuan] = useState('')
   const [addshow,setaddshow]=useState(false)
   const [editshow,seteditshow]=useState({id:0,show:false})
   const [deleteshow,setdeleteshow]=useState({id:0,show:false})
@@ -19,6 +22,7 @@ function Personil() {
   const handleDeleteShow = (id=0)=> setdeleteshow({id:id,show:!deleteshow.show})
   useEffect(()=>{ 
     dispatch(getPersonil())
+    dispatch(getSatuan())
    },[])
   return (
     <div  className='flex flex-col w-full h-full space-y-5'>
@@ -34,8 +38,11 @@ function Personil() {
             <input type="text" placeholder='Search...' className='w-full outline-none bg-transparent' value={search} onChange={(e)=>setsearch(e.target.value)} />
           </div>
           <div className='flex justify-center items-center border border-gray-400 rounded-md px-4'>
-            <select className='w-full outline-none bg-transparent'>
+            <select className='w-full outline-none bg-transparent' value={filterSatuan} onChange={(e)=>setFilterSatuan(e.target.value)}>
               <option value='' className='text-black w-full'>Filter</option>
+              {
+                satuan?.map((item,index)=> <option key={index+1} value={item.nama} className='text-black w-full'>{item.nama}</option>)
+              }
             </select>
           </div>
         </div>
@@ -43,7 +50,7 @@ function Personil() {
 
         <div className='flex flex-wrap w-full gap-4'>
           {deleteshow.show&&<DeletePersonil handleDeleteShow={handleDeleteShow}/>}
-          {personil.filter(val=> val.nama.toLowerCase().includes(search.toLowerCase())).map((val,index)=><div className='bg-white rounded-xl flex space-x-2 p-4 w-60 h-56 justify-between' key={index+1}>
+          {personil.filter(val => val.satuan.toLowerCase().includes(filterSatuan.toLowerCase())).filter(val=> val.nama.toLowerCase().includes(search.toLowerCase())).map((val,index)=><div className='bg-white rounded-xl flex space-x-2 p-4 w-60 h-56 relative' key={index+1}>
             <div className='flex-col space-y-2'>
               <div className='w-14 h-14 rounded-xl bg-gray-300'>
                 {val.picture?<img src={host+`/users/img/${val.picture}`} className="rounded-xl w-full h-full" />:<></>}
@@ -63,12 +70,12 @@ function Personil() {
                 <p className='text-xs text-black line-clamp-1'>{val.satuan?val.satuan:<>--</>}</p>
               </div>
             </div>
-            <div className='flex-flex-col pt-4 relative'>
+            <div className='flex-flex-col pt-4 absolute right-4 top-4'>
               <DotsVerticalIcon className='w-5 h-5 cursor-pointer hover:text-hoveRed' onClick={()=>{
                 if(menu) setmenu(0)
                 if(!menu) setmenu(val.id)
                 }}/>
-              {(menu==val.id)?<div className='bg-white flex-col space-y-2 rounded-md p-2 border border-gray-300 absolute'>
+              {(menu==val.id)?<div className='bg-white flex-col space-y-2 rounded-md p-2 border border-gray-300 absolute -left-10'>
                 <div className='flex space-x-1 cursor-pointer' onClick={()=>{
                   handleEditshow(val.id)
                   setmenu(0)

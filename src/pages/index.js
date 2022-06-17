@@ -17,6 +17,7 @@ import StaffLogistik from "./StaffLogistik";
 import Mrs from "./Mrs";
 import StaffPerencanaan from "./StaffPerencanaan";
 import StaffPersonil from "./StaffPersonil";
+import LaporanKekuatan from './LaporanKekuatan'
 function Main(){
     return(
         <div className="lg:p-2 lg:flex lg:space-x-5 ">
@@ -47,6 +48,7 @@ function Main(){
                         <Route path='/database' element={<Database/>} />
                         <Route path='/monitoring' element={<Monitoring/>} />
                         <Route path='/laporan' element={<Laporan/> } />
+                        <Route path='/laporankekuatan' element={<LaporanKekuatan/>} />
                         <Route path='/*' element={<NotFound/>} />
                     </Route>
                 </Routes>

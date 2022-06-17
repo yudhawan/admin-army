@@ -239,20 +239,20 @@ function AddPersonil({handleAddshow}) {
                         <textarea type='text' className='outline-none w-full h-20' value={data.riwayat_penugasan_dn} onChange={(e)=> setdata({...data, riwayat_penugasan_dn:e.target.value})}/>
                     </div>
                 </div>
-                <div className='flex-col space-y-1'>
-                    <div className='flex flex-col'>
-                        <p className='font-poppins text-gray-500 text-lg'>Nama Istri</p>
-                        <div className='rounded-md border border-[#ab54db] bg-white py-1 w-72 px-2'>
-                            <input type='text' className='outline-none w-full' value={data.istri} onChange={(e)=> setdata({...data, istri:e.target.value})}/>
-                        </div>
-                    </div>
-                    <div className='flex flex-col'>
-                        <p className='font-poppins text-gray-500 text-lg'>Nama Anak</p>
-                        <div className='rounded-md border border-[#ab54db] bg-white py-1 w-72 px-2'>
-                            <input type='text' className='outline-none w-full' value={data.anak} onChange={(e)=> setdata({...data, anak:e.target.value})}/>
-                        </div>
+                
+                <div className='flex flex-col'>
+                    <p className='font-poppins text-gray-500 text-lg'>Nama Istri</p>
+                    <div className='rounded-md border border-[#ab54db] bg-white py-1 w-72 px-2'>
+                        <input type='text' className='outline-none w-full' value={data.istri} onChange={(e)=> setdata({...data, istri:e.target.value})}/>
                     </div>
                 </div>
+                <div className='flex flex-col'>
+                    <p className='font-poppins text-gray-500 text-lg'>Nama Anak</p>
+                    <div className='rounded-md border border-[#ab54db] bg-white py-1 w-72 px-2'>
+                        <textarea type='text' className='outline-none w-full h-20' value={data.anak} onChange={(e)=> setdata({...data, anak:e.target.value})}/>
+                    </div>
+                </div>
+                
                 
                 <div className='flex flex-col'>
                     <p className='font-poppins text-gray-500 text-lg'>Riwayat Pangkat</p>

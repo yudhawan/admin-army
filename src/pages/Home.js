@@ -1,22 +1,37 @@
-import { useEffect } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {getPersonil} from '../features/personilSlice'
-import {getLaporan} from '../features/laporanSlice'
+import {getLaporan,getLaporanKekuatan,getLaporanKekuatanInDuty} from '../features/laporanSlice'
 import { useNavigate } from 'react-router-dom'
 import LineChartPersonil from '../components/Dashboard/LineChartPersonil'
 import img1 from './img1.jpg'
 import img2 from './img2.jpg'
 import {ArrowRightIcon,CollectionIcon,DocumentIcon,BadgeCheckIcon,LibraryIcon,ArrowUpIcon} from '@heroicons/react/outline'
 import host from '../features/host'
+import {DonutChart} from 'react-circle-chart'
 function Home() {
   const navigate=useNavigate()
   const dispatch = useDispatch()
-  const {personil} = useSelector(state => state.personil)
-  const {laporan} = useSelector(state => state.laporan)
+  const {laporan,laporankekuatan,laporankekuataninduty} = useSelector(state => state.laporan)
+  const {personil} = useSelector(state => state.personil) 
+  const [tugasOperasi,setTugasOperasi] = useState({})
+  const [recovery,setRecovery] = useState({})
+  const [siapTugas,setSiapTugas] = useState({})
+  const [kurang,setKurang] = useState({})
+  const [hadir,setHadir] = useState({})
   useEffect(()=>{
     dispatch(getPersonil())
     dispatch(getLaporan())
+    dispatch(getLaporanKekuatan())
+    dispatch(getLaporanKekuatanInDuty())
   },[])
+  useEffect(()=>{
+    setTugasOperasi({value:parseInt(personil.filter(val => val.status==='tugas_operasi').length*100/personil.length), label:"Tugas Operasi",color:'#DB5454'})
+    setRecovery({value: parseInt(personil.filter(val => val.status==='recovery').length*100/personil.length) || 0, label:"Recovery", color:'#EAB308'})
+    setSiapTugas({value: parseInt(personil.filter(val => val.status==='siap_tugas').length*100/personil.length), label:"Siap Tugas",color:'#22C55E'})
+    setKurang({value: parseInt(personil.filter(val => val.kehadiran==='tidak').length*100/personil.length), label:"Kurang",color:'#22C55E'})
+    setHadir({value: parseInt(personil.filter(val => val.kehadiran==='hadir').length*100/personil.length), label:"Hadir",color:'#3B82F6'})
+  },[personil])
   return (
     <div className='flex w-full h-full space-x-4'>
       {/* left */}
@@ -88,28 +103,29 @@ function Home() {
           {/* chart 3 */}
           <div className='bg-white rounded-md px-4 py-2 flex flex-col justify-center items-center space-y-2'>
             <p>Grafik Personil</p>
-            <div className='rotate-12 w-32 h-32 border-[20px] border-t-red border-r-yellow-500 border-b-green-500 border-l-transparent rounded-full'></div>
+            {/* <div className='rotate-12 w-32 h-32 border-[20px] border-t-red border-r-yellow-500 border-b-green-500 border-l-transparent rounded-full'></div> */}
+            <DonutChart items={[tugasOperasi,recovery,siapTugas]} size="120" totalSx={{fontSize:'22px'}} />
             <div className='flex space-x-4 justify-center items-center'>
               <div className='flex flex-col justify-center items-center space-y-1'>
                 <div className='flex space-x-1 items-center'>
                   <div className='w-3 h-3 bg-red'></div>
                   <p className='text-sm text-gray-400'>Operasi</p>
                 </div>
-                <p>0</p>
+                <p>{personil.filter(val => val.status==='tugas_operasi').length}</p>
               </div>
               <div className='flex flex-col justify-center items-center space-y-1'>
                 <div className='flex space-x-1 items-center'>
                   <div className='w-3 h-3 bg-yellow-500'></div>
                   <p className='text-sm text-gray-400'>Recovery</p>
                 </div>
-                <p>0</p>
+                <p>{personil.filter(val => val.status==='recovery').length}</p>
               </div>
               <div className='flex flex-col justify-center items-center space-y-1'>
                 <div className='flex space-x-1 items-center'>
                   <div className='w-3 h-3 bg-green-500'></div>
                   <p className='text-sm text-gray-400'>Siap Tugas</p>
                 </div>
-                <p>0</p>
+                <p>{personil.filter(val => val.status==='siap_tugas').length}</p>
               </div>
             
             </div>
@@ -162,24 +178,24 @@ function Home() {
               </div>
             </div>
             <div className='flex space-x-1 items-center relative h-16 -z-10'>
-              <div className='absolute left-0 top-0 shadow-md h-16 w-16 bg-white flex justify-center rounded-full items-center border-t-green-500 border-r-green-500 border-b-green-500 border-l-transparent border-4 rotate-45'><p className='-rotate-45 text-gray-500 font-semibold'>80%</p></div>
+              <div className='absolute left-0 top-0 shadow-md h-16 w-16 bg-white flex justify-center rounded-full items-center border-t-green-500 border-r-green-500 border-b-green-500 border-l-green-500 border-l-transparent border-4 rotate-45'><p className='-rotate-45 text-gray-500 font-semibold'>100%</p></div>
               <div className='bg-white w-56 h-10 rounded-lg flex space-x-3 items-center justify-between pl-16 pr-3'>
                 <p className='text-gray-500 font-semibold ml-2'>NYATA</p>
-                <p className='text-gray-500 font-semibold'>800</p>
+                <p className='text-gray-500 font-semibold'>{personil.length}</p>
               </div>
             </div>
             <div className='flex space-x-1 items-center relative h-16 -z-10'>
-              <div className='absolute left-0 top-0 h-16 w-16 bg-white flex justify-center rounded-full items-center border-t-red border-r-transparent border-b-transparent border-l-transparent border-4 rotate-45 '><p className='-rotate-45 text-gray-500 font-semibold'>25%</p></div>
+              <div className='absolute left-0 top-0 h-16 w-16 bg-white flex justify-center rounded-full items-center'><DonutChart trackWidth="sm" trackColor='#E5E7EB' items={[kurang]} size="80" totalSx={{fontSize:'16px'}} /></div>
               <div className='bg-white w-56 h-10 rounded-lg flex space-x-3 items-center justify-between pl-16 pr-3'>
                 <p className='text-gray-500 font-semibold ml-2'>KURANG</p>
-                <p className='text-gray-500 font-semibold'>250</p>
+                <p className='text-gray-500 font-semibold'>{personil.filter(val=> val.kehadiran==='tidak').length}</p>
               </div>
             </div>
             <div className='flex space-x-1 items-center relative h-16 -z-10'>
-              <div className='absolute left-0 top-0 h-16 w-16 bg-white flex justify-center rounded-full items-center border-t-blue-500 border-r-blue-500 border-b-transparent border-l-transparent border-4 rotate-45 '><p className='-rotate-45 text-gray-500 font-semibold'>50%</p></div>
+              <div className='absolute left-0 top-0 h-16 w-16 bg-white flex justify-center rounded-full items-center'><DonutChart trackWidth="sm" trackColor='#E5E7EB' items={[hadir]} size="80" totalSx={{fontSize:'16px'}} /></div>
               <div className='bg-white w-56 h-10 rounded-lg flex space-x-3 items-center justify-between pl-16 pr-3'>
                 <p className='text-gray-500 font-semibold ml-2'>HADIR</p>
-                <p className='text-gray-500 font-semibold'>500</p>
+                <p className='text-gray-500 font-semibold'>{personil.filter(val=> val.kehadiran==='hadir').length}</p>
               </div>
             </div>
           </div>
@@ -187,10 +203,10 @@ function Home() {
             <div className='rounded-full bg-white p-2 rotate-45 -z-10'><ArrowUpIcon className='text-gray-600 w-6 h-6' /></div>
             <div className='flex space-x-2'>
               <div className='h-60 w-2 bg-black rounded-xl flex items-end'>
-                <div className='h-[80%] w-full bg-blue-600 rounded-xl'></div>
+                <div style={{height:parseInt(personil.filter(val=> val.kehadiran==='hadir').length*100/personil.length)+"%"}} className='w-full bg-blue-600 rounded-xl'></div>
               </div>
               <div className='h-60 w-2 bg-black rounded-xl flex items-end'>
-                <div className='h-[40%] w-full bg-red rounded-xl'></div>
+                <div style={{height:parseInt(personil.filter(val=> val.kehadiran==='tidak').length*100/personil.length)+"%"}}  className='h-[40%] w-full bg-red rounded-xl'></div>
               </div>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import {HomeIcon,CollectionIcon,UserGroupIcon,DatabaseIcon,PresentationChartBarIcon,DocumentIcon,ColorSwatchIcon,CubeIcon,TemplateIcon,ArchiveIcon,StatusOnlineIcon,PuzzleIcon,BriefcaseIcon,CogIcon,PaperAirplaneIcon,ChevronDoubleLeftIcon,ChevronDoubleRightIcon,LogoutIcon} from '@heroicons/react/outline'
+import {HomeIcon,CollectionIcon,UserGroupIcon,DatabaseIcon,PresentationChartBarIcon,DocumentIcon,DocumentTextIcon,ColorSwatchIcon,CubeIcon,TemplateIcon,ArchiveIcon,StatusOnlineIcon,PuzzleIcon,BriefcaseIcon,CogIcon,PaperAirplaneIcon,ChevronDoubleLeftIcon,ChevronDoubleRightIcon,LogoutIcon} from '@heroicons/react/outline'
 import {useLocation, useNavigate} from 'react-router-dom';
 import { useEffect, useState } from 'react'
 import {useDispatch} from 'react-redux'
@@ -83,6 +83,10 @@ function TabMenu() {
                     <DocumentIcon className={`w-5 h-5 ${(pathname==='/laporan')?'text-[#db5454]':'text-gray-500'} text-gray-500`}/>
                     <div className={`${(pathname==='/laporan')?'text-[#db5454]':'text-black'} font-medium`}>Laporan</div>
                 </div>
+                <div className={`flex space-x-3 cursor-pointer ${(pathname==='/laporankekuatan')?'bg-[#f4dfe1]':''} rounded-xl px-2 py-2 justify-start items-center`} onClick={()=> navigate('/laporankekuatan')}>
+                    <DocumentTextIcon className={`w-5 h-5 ${(pathname==='/laporankekuatan')?'text-[#db5454]':'text-gray-500'} text-gray-500`}/>
+                    <div className={`${(pathname==='/laporankekuatan')?'text-[#db5454]':'text-black'} font-medium`}>Laporan Kekuatan</div>
+                </div>
                 <div className='flex flex-col space-x-1 w-full'>
                     <div className={`flex space-x-3 cursor-pointer rounded-xl px-2 py-2 justify-start items-center`} onClick={()=> setsetting(!setting)}>
                         <CogIcon className={`w-5 h-5 text-gray-500`}/>
@@ -165,6 +169,10 @@ function TabMenu() {
                 <div className={`flex space-x-3 cursor-pointer ${(pathname==='/laporan')?'bg-gray-200':''} rounded-xl px-2 py-2 justify-start items-center`} onClick={()=> navigate('/laporan')}>
                     <DocumentIcon className={`w-5 h-5 ${(pathname==='/laporan')?'text-slate-600':'text-gray-500'} text-gray-500`}/>
                     <div className={`${(pathname==='/laporan')?'text-slate-600':'text-black'} font-medium`}>Laporan</div>
+                </div>
+                <div className={`flex space-x-3 cursor-pointer ${(pathname==='/laporankekuatan')?'bg-gray-200':''} rounded-xl px-2 py-2 justify-start items-center`} onClick={()=> navigate('/laporankekuatan')}>
+                    <DocumentTextIcon className={`w-5 h-5 ${(pathname==='/laporankekuatan')?'text-slate-600':'text-gray-500'} text-gray-500`}/>
+                    <div className={`${(pathname==='/laporankekuatan')?'text-slate-600':'text-black'} font-medium`}>Laporan Kekuatan</div>
                 </div>
                 <div className='flex flex-col space-x-1 w-full'>
                     <div className={`flex space-x-3 cursor-pointer rounded-xl px-2 py-2 justify-start items-center`} onClick={()=> setsetting(!setting)}>

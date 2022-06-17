@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import host from "./host";
+
 export const getLaporan = createAsyncThunk("laporan/getLaporan", async (arg,{getState})=>{
     const result = await axios({
         method: "get",
@@ -11,7 +12,26 @@ export const getLaporan = createAsyncThunk("laporan/getLaporan", async (arg,{get
     })
     return result.data;
 })
-
+export const getLaporanKekuatan = createAsyncThunk("laporan/getLaporanKekuatan", async (arg,{getState})=>{
+    const result = await axios({
+        method: "get",
+        url: host+"/admin/laporankekuatan",
+        headers:{
+            "authorization": "Bearer "+getState().auth.token
+        },
+    })
+    return result.data;
+})
+export const getLaporanKekuatanInDuty = createAsyncThunk("laporan/getLaporanKekuatanInDuty", async (arg,{getState})=>{
+    const result = await axios({
+        method: "get",
+        url: host+"/admin/laporankekuatan/induty",
+        headers:{
+            "authorization": "Bearer "+getState().auth.token
+        },
+    })
+    return result.data;
+})
 export const deleteLaporan = createAsyncThunk("laporan/deleteLaporan", async (data)=>{
     return null
 })
@@ -31,6 +51,8 @@ const laporanSlice = createSlice({
     name:'laporan',
     initialState:{
         laporan:[],
+        laporankekuatan:[],
+        laporankekuataninduty:[],
         loading:false,
         error:null,
     },
@@ -65,6 +87,28 @@ const laporanSlice = createSlice({
             state.laporan = action.payload;
         },
         [updateLaporan.rejected]:(state,action)=>{
+            state.loading = false;
+            state.error = action.error.message;
+        },
+        [getLaporanKekuatan.pending]:(state,action)=>{
+            state.loading = true;
+        },
+        [getLaporanKekuatan.fulfilled]:(state,action)=>{
+            state.loading = false;
+            state.laporankekuatan = action.payload;
+        },
+        [getLaporanKekuatan.rejected]:(state,action)=>{
+            state.loading = false;
+            state.error = action.error.message;
+        },
+        [getLaporanKekuatanInDuty.pending]:(state,action)=>{
+            state.loading = true;
+        },
+        [getLaporanKekuatanInDuty.fulfilled]:(state,action)=>{
+            state.loading = false;
+            state.laporankekuataninduty = action.payload;
+        },
+        [getLaporanKekuatanInDuty.rejected]:(state,action)=>{
             state.loading = false;
             state.error = action.error.message;
         }

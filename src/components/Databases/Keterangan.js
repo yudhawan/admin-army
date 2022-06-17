@@ -83,7 +83,7 @@ function Keterangan() {
             <div className='flex flex-col items-center w-full space-y-1'>
                 <p className='text-gray-500 font-bold'>Sub Keterangan</p>
                 <div className='w-full h-[1px] bg-slate-400'></div>
-                <div className='w-full h-auto bg-violet-100 flex flex-wrap rounded-lg p-4 gap-2 relative'>
+                <div className='w-full h-auto bg-violet-100 flex flex-col space-y-2 p-4 rounded-lg relative'>
                     <form className='flex px-2 py-1 border border-slate-300 rounded-lg w-fit divide-x bg-white' onSubmit={(e)=>{
                         e.preventDefault()
                         dispatch(postSubKeterangan({keteranganId:idket,subketerangan:subket}))
@@ -95,24 +95,24 @@ function Keterangan() {
                         setsubket('')
                         }}>Add</div>
                     </form>
-                    <div className='flex w-full h-full flex-wrap rounded-lg gap-2'>
-                        {showeditsub&&
-                        <div className='w-full h-full bg-transparent backdrop-blur-lg rounded-lg flex justify-center items-center absolute left-0 top-0 p-4'>
-                            <form className='w-full flex flex-col lg:flex-row space-y-2 lg:space-x-2 items-start'  onSubmit={(e)=>{
-                                e.preventDefault()
-                                dispatch(updateSubKeterangan(editsub))
-                                setshoweditsub(!showeditsub)
-                            }}>
-                                <div className='flex p-1 lg:p-2 border border-slate-400 rounded-lg w-60 divide-x'>
-                                    <input type="text" value={editsub.sub} onChange={(e)=>seteditsub({...editsub,sub:e.target.value})} className="w-full outline-none bg-transparent text-gray-500"/>
-                                </div>
-                                <div className="w-fit px-2 rounded-lg border border-blue-500 hover:border-blue-500 hover:bg-blue-500 h-full text-blue-600 cursor-pointer hover:text-white" onClick={()=> {
-                                dispatch(updateSubKeterangan(editsub))
-                                setshoweditsub(!showeditsub)
-                                }}>Update</div>
-                                <div className="w-fit px-2 rounded-lg  h-full bg-red cursor-pointer text-white" onClick={()=> setshoweditsub(false)}>Close</div>
-                            </form>
-                        </div>}
+                    {showeditsub&&
+                    <div className='w-full h-full bg-transparent backdrop-blur-lg rounded-lg flex justify-center items-center absolute left-0 top-0 p-4'>
+                        <form className='w-full flex flex-col lg:flex-row space-y-2 lg:space-x-2 items-start'  onSubmit={(e)=>{
+                            e.preventDefault()
+                            dispatch(updateSubKeterangan(editsub))
+                            setshoweditsub(!showeditsub)
+                        }}>
+                            <div className='flex p-1 lg:p-2 border border-slate-400 rounded-lg w-60 divide-x'>
+                                <input type="text" value={editsub.sub} onChange={(e)=>seteditsub({...editsub,sub:e.target.value})} className="w-full outline-none bg-transparent text-gray-500"/>
+                            </div>
+                            <div className="w-fit px-2 rounded-lg border border-blue-500 hover:border-blue-500 hover:bg-blue-500 h-full text-blue-600 cursor-pointer hover:text-white" onClick={()=> {
+                            dispatch(updateSubKeterangan(editsub))
+                            setshoweditsub(!showeditsub)
+                            }}>Update</div>
+                            <div className="w-fit px-2 rounded-lg  h-full bg-red cursor-pointer text-white" onClick={()=> setshoweditsub(false)}>Close</div>
+                        </form>
+                    </div>}
+                    <div className='flex w-full h-full flex flex-wrap rounded-lg gap-2'>
                         {subKeterangan?.filter(val => val.keteranganId==idket).map((item,index)=>
                         <div key={index+1} className={`text-white px-1 rounded-md w-fit h-fit flex items-center space-x-2 bg-violet-600`}>
                             <p>{item.subketerangan}</p>

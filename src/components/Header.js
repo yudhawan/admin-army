@@ -21,7 +21,7 @@ function Header() {
                 <div className='text-black text-xl'>{(pathname==="/")?<div>Dashboard</div>:(pathname==="/users")?<div>Users</div>:(pathname==="/personil")?<div>Personil</div>:(pathname==="/database")?<div>Database</div>:(pathname==="/monitoring")?<div>Monitoring</div>:(pathname==="/piranti_lunak")?<div>Piranti Lunak</div>:(pathname==="/materill")?<div>Materill</div>:<div>Laporan</div>}</div>
                 
             </div>
-            <div className='lg:block hidden w-full h-20 lg:flex justify-between px-5 items-center bg-transparent backdrop-blur-sm z-20'>
+            <div className='lg:block hidden w-full h-20 lg:flex justify-between px-5 lg:pl-5 xl:pl-8 items-center bg-transparent backdrop-blur-sm z-20'>
                 <div className='text-black text-xl font-bold w-96'>{
                 (pathname==="/")?<div className='flex-col'>
                     <div className='text-2xl'>Dashboard</div>
@@ -77,6 +77,10 @@ function Header() {
                 </div>
                 :(pathname==="/laporan")?<div className='flex-col'>
                     <div className='text-2xl'>Laporan</div>
+                    <p className='text-sm font-normal'>Daftar seluruh laporan</p>
+                </div>
+                :(pathname==="/laporankekuatan")?<div className='flex-col'>
+                    <div className='text-xl font-semibold'>Dashboard Apel Kekuatan <span className='font-bold'>Sat 81</span> Kopasus</div>
                     <p className='text-sm font-normal'>Daftar seluruh laporan</p>
                 </div>:<></>
                 }</div>
