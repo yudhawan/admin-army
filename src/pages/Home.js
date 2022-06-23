@@ -9,6 +9,7 @@ import img2 from './img2.jpg'
 import {ArrowRightIcon,CollectionIcon,DocumentIcon,BadgeCheckIcon,LibraryIcon,ArrowUpIcon} from '@heroicons/react/outline'
 import host from '../features/host'
 import {DonutChart} from 'react-circle-chart'
+import { parse } from 'postcss'
 function Home() {
   const navigate=useNavigate()
   const dispatch = useDispatch()
@@ -19,6 +20,7 @@ function Home() {
   const [siapTugas,setSiapTugas] = useState({})
   const [kurang,setKurang] = useState({})
   const [hadir,setHadir] = useState({})
+  const [laporanMingguan,setLaporanMingguan] = useState([])
   useEffect(()=>{
     dispatch(getPersonil())
     dispatch(getLaporan())
@@ -26,12 +28,21 @@ function Home() {
     dispatch(getLaporanKekuatanInDuty())
   },[])
   useEffect(()=>{
+    setLaporanMingguan([...new Set(laporan.filter(val => {
+        let date = new Date(val.createdAt)
+        let today = new Date()
+        let nextweek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7)
+        return date > nextweek
+      }).map(val => {
+      let date = new Date(val.createdAt).toDateString()
+      return date
+    }))])
     setTugasOperasi({value:parseInt(personil.filter(val => val.status==='tugas_operasi').length*100/personil.length), label:"Tugas Operasi",color:'#DB5454'})
     setRecovery({value: parseInt(personil.filter(val => val.status==='recovery').length*100/personil.length) || 0, label:"Recovery", color:'#EAB308'})
     setSiapTugas({value: parseInt(personil.filter(val => val.status==='siap_tugas').length*100/personil.length), label:"Siap Tugas",color:'#22C55E'})
-    setKurang({value: parseInt(personil.filter(val => val.kehadiran==='tidak').length*100/personil.length), label:"Kurang",color:'#22C55E'})
-    setHadir({value: parseInt(personil.filter(val => val.kehadiran==='hadir').length*100/personil.length), label:"Hadir",color:'#3B82F6'})
-  },[personil])
+    setKurang({value: (personil.filter(val => val.kehadiran==='tidak').length*100/personil.length).toFixed(1), label:"Kurang",color:'#22C55E'})
+    setHadir({value: (personil.filter(val => val.kehadiran==='hadir').length*100/personil.length).toFixed(1), label:"Hadir",color:'#3B82F6'})
+  },[personil,laporan])
   return (
     <div className='flex w-full h-full space-x-4'>
       {/* left */}
@@ -64,39 +75,36 @@ function Home() {
         <LineChartPersonil/>
         {/* chart 3 */}
         <div className='flex space-x-2'>
-          <div className='flex-col w-fit bg-white px-4 py-2 rounded-md'>
+          <div className='flex-col h-60 w-96 bg-white px-4 py-2 rounded-md'>
             <p>Laporan Minggu Ini</p>
-            <p className='text-green-500'>{laporan.length} Laporan</p>
-            <div className='flex w-full'>
-              <div className='flex w-full items-baseline space-x-4'>
-                <div className='flex flex-col space-y-1 items-center'>
-                  <div className='w-8 h-10 bg-[#f8e4e4] hover:bg-red rounded-md'></div>
-                  <p className='text-xs text-gray-500'>Senin</p>
-                </div>
-                <div className='flex flex-col space-y-1 items-center'>
-                  <div className='w-8 h-20 bg-[#f8e4e4] hover:bg-red rounded-md'></div>
-                  <p className='text-xs text-gray-500'>Selasa</p>
-                </div>
-                <div className='flex flex-col space-y-1 items-center'>
-                  <div className='w-8 h-32 bg-[#f8e4e4] hover:bg-red rounded-md'></div>
-                  <p className='text-xs text-gray-500'>Rabu</p>
-                </div>
-                <div className='flex flex-col space-y-1 items-center'>
-                  <div className='w-8 h-16 bg-[#f8e4e4] hover:bg-red rounded-md'></div>
-                  <p className='text-xs text-gray-500'>Kamis</p>
-                </div>
-                <div className='flex flex-col space-y-1 items-center'>
-                  <div className='w-8 h-20 bg-[#f8e4e4] hover:bg-red rounded-md'></div>
-                  <p className='text-xs text-gray-500'>Jumat</p>
-                </div>
-                <div className='flex flex-col space-y-1 items-center'>
-                  <div className='w-8 h-32 bg-[#f8e4e4] hover:bg-red rounded-md'></div>
-                  <p className='text-xs text-gray-500'>Sabtu</p>
-                </div>
-                <div className='flex flex-col space-y-1 items-center'>
-                  <div className='w-8 h-8 bg-[#f8e4e4] hover:bg-red rounded-md'></div>
-                  <p className='text-xs text-gray-500'>Minggu</p>
-                </div>
+            <p className='text-green-500'>{laporan.filter(val => {
+                  let date = new Date(val.createdAt)
+                  let today = new Date()
+                  let nextweek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7)
+                  return date > nextweek
+                }).length} Laporan</p>
+            <div className='flex w-full h-3/4 '>
+              <div className='flex w-full h-full space-x-4 items-end'>
+              {
+                
+                laporanMingguan?.sort((data1,data2) => {
+                  return new Date(data1) - new Date(data2)
+                }).map(val=>{
+                  let value = laporan.filter(x=> {
+                    let theDate = new Date(x.createdAt).toDateString()
+                    return theDate===val
+                  }).length/110*100
+                  return(
+                    <div className='flex flex-col space-y-1 items-center'>
+                      <p className='text-xs text-red'>{value.toFixed(1)}%</p>
+                      <div style={{height:(value>110)?'110px':value+'px'}} className={`w-8 bg-[#f8e4e4] hover:bg-red rounded-md`}></div>
+                      <p className='text-xs text-gray-500'>{(val.split(' ')[0]==='Sun')?<>Minggu</>:(val.split(' ')[0]==='Mon')?<>Senin</>:(val.split(' ')[0]==='Tue')?<>Selasa</>:(val.split(' ')[0]==='Wed')?<>Rabu</>:(val.split(' ')[0]==='Thu')?<>Kamis</>:(val.split(' ')[0]==='Fri')?<>Jumat</>:(val.split(' ')[0]==='Sat')?<>Sabtu</>:<></>}</p>
+                      <p className='text-xs text-green-500'>{val.split(' ')[2]} {val.split(' ')[1]}</p>
+                    </div>
+                  )
+                })
+              }
+                
               </div>
             </div>
           </div>
@@ -188,7 +196,12 @@ function Home() {
               <div className='absolute left-0 top-0 h-16 w-16 bg-white flex justify-center rounded-full items-center'><DonutChart trackWidth="sm" trackColor='#E5E7EB' items={[kurang]} size="80" totalSx={{fontSize:'16px'}} /></div>
               <div className='bg-white w-56 h-10 rounded-lg flex space-x-3 items-center justify-between pl-16 pr-3'>
                 <p className='text-gray-500 font-semibold ml-2'>KURANG</p>
-                <p className='text-gray-500 font-semibold'>{personil.filter(val=> val.kehadiran==='tidak').length}</p>
+                <p className='text-gray-500 font-semibold'>{personil.filter(val=> {
+                  let now = new Date()
+                  let enddate = new Date(val.endDate)
+                  if(enddate > now) if(val.kehadiran==='tidak') return val
+                  
+                  }).length}</p>
               </div>
             </div>
             <div className='flex space-x-1 items-center relative h-16 -z-10'>

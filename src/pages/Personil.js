@@ -1,5 +1,5 @@
 import {PlusIcon,SearchIcon,TrashIcon,PencilIcon, DotsVerticalIcon,PhoneIcon, BriefcaseIcon,MailIcon,ShieldCheckIcon, FireIcon} from '@heroicons/react/outline'
-import { useEffect, useState } from 'react'
+import { useEffect, useState,useTransition } from 'react'
 import {getPersonil,deletePersonil} from '../features/personilSlice'
 import {getSatuan} from '../features/catandlapSlice'
 import { useDispatch,useSelector } from 'react-redux'
@@ -9,6 +9,7 @@ import DeletePersonil from '../components/Personil/DeletePersonil'
 import host from '../features/host'
 function Personil() {
   const dispatch = useDispatch()
+  const [isPending, startTransition] = useTransition()
   const {personil,loading} = useSelector(state=>state.personil)
   const {satuan} = useSelector(state=>state.catandlap)
   const [search,setsearch] = useState("")
@@ -22,7 +23,9 @@ function Personil() {
   const handleDeleteShow = (id=0)=> setdeleteshow({id:id,show:!deleteshow.show})
   useEffect(()=>{ 
     dispatch(getPersonil())
-    dispatch(getSatuan())
+    startTransition(()=>{
+      dispatch(getSatuan())
+    })
    },[])
   return (
     <div  className='flex flex-col w-full h-full space-y-5'>
@@ -50,7 +53,7 @@ function Personil() {
 
         <div className='flex flex-wrap w-full gap-4'>
           {deleteshow.show&&<DeletePersonil handleDeleteShow={handleDeleteShow}/>}
-          {personil.filter(val => val.satuan.toLowerCase().includes(filterSatuan.toLowerCase())).filter(val=> val.nama.toLowerCase().includes(search.toLowerCase())).map((val,index)=><div className='bg-white rounded-xl flex space-x-2 p-4 w-60 h-56 relative' key={index+1}>
+          {personil?.filter(val => val.satuan.toLowerCase().includes(filterSatuan.toLowerCase())).filter(val=> val.nama.toLowerCase().includes(search.toLowerCase())).map((val,index)=><div className='bg-white rounded-xl flex space-x-2 p-4 w-60 h-56 relative' key={index+1}>
             <div className='flex-col space-y-2'>
               <div className='w-14 h-14 rounded-xl bg-gray-300'>
                 {val.picture?<img src={host+`/users/img/${val.picture}`} className="rounded-xl w-full h-full" />:<></>}
@@ -91,6 +94,18 @@ function Personil() {
                   <p className='text-xs text-rose-500'>Hapus</p>
                 </div>
               </div>:<></>}
+            </div>
+          </div>)}
+          {(loading | isPending)&&[1,2,3,4,5].map((val,idx)=><div className='w-60 h-56 bg-white animate-pulse flex-col space-y-6 p-4 rounded-xl'>
+            <div className='space-y-2 flex-col'>
+              <div className='w-14 h-14 rounded-xl bg-gray-200'></div>
+              <div className='w-16 h-3 rounded-lg bg-gray-200'></div>
+            </div>
+            <div className='space-y-2 flex-col'>
+              <div className='w-28 h-3 rounded-lg bg-gray-200'></div>
+              <div className='w-28 h-3 rounded-lg bg-gray-200'></div>
+              <div className='w-28 h-3 rounded-lg bg-gray-200'></div>
+              <div className='w-28 h-3 rounded-lg bg-gray-200'></div>
             </div>
           </div>)}
          

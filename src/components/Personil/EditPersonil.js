@@ -313,7 +313,59 @@ function EditPersonil({handleEditshow,editshow}) {
                         </div>
                 </div>
             </div>
-            
+            <div className='flex-col space-y-2'>
+                <p className='text-gray-400 text-sm font-semibold'>Informasi Kesehatan</p>
+                <div className='flex flex-wrap gap-4'>
+                    <div className='flex flex-col'>
+                        <p className='font-poppins text-gray-500 text-lg'>NIK</p>
+                        <div className='rounded-md border border-[#ab54db] bg-white py-1 w-72 px-2'>
+                            <input type='text' className='outline-none w-full' value={data.nik} onChange={(e)=> setdata({...data, nik:e.target.value})}/>
+                        </div>
+                    </div>
+                    <div className='flex flex-col'>
+                        <p className='font-poppins text-gray-500 text-lg'>Nomor BPJS</p>
+                        <div className='rounded-md border border-[#ab54db] bg-white py-1 w-72 px-2'>
+                            <input type='text' className='outline-none w-full' value={data.bpjs} onChange={(e)=> setdata({...data, bpjs:e.target.value})}/>
+                        </div>
+                    </div>
+                    <div className='flex flex-col'>
+                        <p className='font-poppins text-gray-500 text-lg'>Upload File BPJS</p>
+                        <div className='rounded-md border border-[#ab54db] bg-white py-1 w-72 px-2'>
+                            <input type='file' className='outline-none w-full' onChange={(e)=> setfilebpjs(e.target.files[0])}/>
+                        </div>
+                    </div>
+                    <div className='flex flex-col'>
+                        <p className='font-poppins text-gray-500 text-lg'>Asuransi Lainnya</p>
+                        <div className='rounded-md border border-[#ab54db] bg-white py-1 w-72 px-2'>
+                            <input type='text' className='outline-none w-full' value={data.asuasuransi_lainnya} onChange={(e)=> setdata({...data,asuransi_lainnya:e.target.value})}/>
+                        </div>
+                    </div>
+                    <div className='flex flex-col'>
+                        <p className='font-poppins text-gray-500 text-lg'>Kode ASABRI</p>
+                        <div className='rounded-md border border-[#ab54db] bg-white py-1 w-72 px-2'>
+                            <input type='text' className='outline-none w-full' value={data.kode_asabri} onChange={(e)=> setdata({...data, kode_asabri:e.target.value})}/>
+                        </div>
+                    </div>
+                    <div className='flex flex-col'>
+                        <p className='font-poppins text-gray-500 text-lg'>Riwayat Penyakit</p>
+                        <div className='rounded-md border border-[#ab54db] bg-white py-1 w-72 px-2'>
+                            <textarea type='text' className='outline-none w-full' value={data.riwayat_penyakit} onChange={(e)=> setdata({...data, riwayat_penyakit:e.target.value})}/>
+                        </div>
+                    </div>
+                    <div className='flex flex-col'>
+                        <p className='font-poppins text-gray-500 text-lg'>Stakes</p>
+                        <div className='rounded-md border border-[#ab54db] bg-white py-1 w-72 px-2'>
+                            <input type='text' className='outline-none w-full' value={data.stakes} onChange={(e)=> setdata({...data, stakes:e.target.value})}/>
+                        </div>
+                    </div>
+                    <div className='flex flex-col'>
+                        <p className='font-poppins text-gray-500 text-lg'>Riwayat Alergi</p>
+                        <div className='rounded-md border border-[#ab54db] bg-white py-1 w-72 px-2'>
+                            <input type='text' className='outline-none w-full' value={data.riwayat_alergi} onChange={(e)=> setdata({...data, riwayat_alergi:e.target.value})}/>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
         {validation&&<div className='bg-rose-100 text-red py-1 px-2'>{validation}</div>}
         <button className='text-white bg-[#00a389] px-4 py-1 rounded-lg w-28 mt-5 self-end' onClick={()=>validatonForm()}>Simpan</button>
