@@ -6,6 +6,10 @@ body{
     background-color: #f7f2f2;
     font-family: 'Poppins', sans-serif;
 }
+.highlight{
+    font-weight: 900;
+    border-radius: 100%;
+}
 ::-webkit-scrollbar {
     width: 5px;
     height: 5px;

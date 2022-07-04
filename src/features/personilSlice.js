@@ -11,7 +11,18 @@ export const getPersonil = createAsyncThunk("personil/getPersonil", async (arg,{
     });
     return result.data;
 })
-
+export const getPersonilPagination = createAsyncThunk("personil/getPersonilPagination", async (data,{getState})=>{
+    const {personilPagination} = getState().personil
+    const result = await axios({
+        method: "get",
+        url:host+"/admin/personilPagination",
+        headers:{
+            "authorization": "Bearer "+getState().auth.token
+        },
+        params:{page:data.page,limit:20,query:data.query}
+    })
+   return {data:[...new Set([...personilPagination, ...result.data.data.map(val => val)])], personilLength:result.data.personilLength}
+})
 export const postPersonil = createAsyncThunk("personil,postPersonil", async (data,{getState,dispatch})=>{
     let formdata = new FormData();
     formdata.append("personil",JSON.stringify(data.data));
@@ -101,7 +112,9 @@ export const getFiles=createAsyncThunk('personil/getFiles',async (payload,{getSt
 const personilSLice = createSlice({
     name: "personil",
     initialState: {
+        personilPagination:[],
         personil: [],
+        personilLength:0,
         loading: false,
         error: null,
         status: null,
@@ -109,15 +122,38 @@ const personilSLice = createSlice({
         files:[],
         dir:[],
     },
+    reducers:{
+        resetStatus: (state)=>{
+            state.status = null
+            state.loading = false;
+        },
+        resetPersonilPage: (state)=>{
+            state.personilPagination=[]
+        }
+    },
     extraReducers:{
         [getPersonil.pending]: (state)=>{
             state.loading = true;
         },
         [getPersonil.fulfilled]:(state,action)=>{
             state.personil = action.payload
+            state.loading = false;
         },
         [getPersonil.rejected]:(state,action)=>{
             state.error = action.error
+            state.loading=false
+        },
+        [getPersonilPagination.pending]: (state)=>{
+            state.loading = true;
+        },
+        [getPersonilPagination.fulfilled]:(state,action)=>{
+            state.personilPagination =action.payload.data
+            state.personilLength = action.payload.personilLength
+            state.loading = false;
+        },
+        [getPersonilPagination.rejected]:(state,action)=>{
+            state.error = action.error
+            state.loading=false
         },
         [postPersonil.pending]: (state)=>{
             state.loading = true;
@@ -125,9 +161,11 @@ const personilSLice = createSlice({
         [postPersonil.fulfilled]:(state,action)=>{
             state.status = action.payload.status
             state.message = action.payload.message
+            state.loading = false;
         },
         [postPersonil.rejected]:(state,action)=>{
             state.error = action.error
+            state.loading=false
         },
         [deletePersonil.pending]: (state)=>{
             state.loading = true;
@@ -135,9 +173,11 @@ const personilSLice = createSlice({
         [deletePersonil.fulfilled]:(state,action)=>{
             state.status = action.payload.status
             state.message = action.payload.message
+            state.loading = false;
         },
         [deletePersonil.rejected]:(state,action)=>{
             state.error = action.error
+            state.loading=false
         },
         [updatePersonil.pending]: (state)=>{
             state.loading = true;
@@ -145,9 +185,11 @@ const personilSLice = createSlice({
         [updatePersonil.fulfilled]:(state,action)=>{
             state.status = action.payload.status
             state.message = action.payload.message
+            state.loading = false;
         },
         [updatePersonil.rejected]:(state,action)=>{
             state.error = action.error
+            state.loading=false
         },
         [getFiles.pending]: (state)=>{
             state.loading = true;
@@ -158,6 +200,7 @@ const personilSLice = createSlice({
         },
         [getFiles.rejected]:(state,action)=>{
             state.error = action.error
+            state.loading=false
         },
         [getDir.pending]: (state)=>{
             state.loading = true;
@@ -168,8 +211,9 @@ const personilSLice = createSlice({
         },
         [getDir.rejected]:(state,action)=>{
             state.error = action.error
+            state.loading=false
         }
     }
 })
-
+export const {resetStatus,resetPersonilPage} = personilSLice.actions
 export default personilSLice.reducer;

@@ -11,6 +11,16 @@ export const getData = createAsyncThunk('materillSlice/getData', async (payload,
         }
     });
     return response.data;
+})
+export const getDataMaintenance = createAsyncThunk('materillSlice/getDataMaintenance', async (payload,{getState}) => {
+    const response = await axios({
+        method: 'get',
+        url:`${host}/materill/admin/maintenance`,
+        headers: {
+            'Authorization': `Bearer ${getState().auth.token}`
+        }
+    });
+    return response.data;
 });
 
 export const deleteData = createAsyncThunk('materillSlice/deleteData', async (payload,{getState,dispatch}) => {
@@ -31,6 +41,7 @@ const materillSlice = createSlice({
     initialState: {
         loading: false,
         materill:[],
+        maintenance:[],
         error: null,
     },
     extraReducers:{
@@ -41,6 +52,15 @@ const materillSlice = createSlice({
             state.materill = action.payload
         },
         [getData.rejected]:(state,action)=>{
+            state.error = action.payload
+        },
+        [getDataMaintenance.pending]:(state)=>{
+            state.loading = true
+        },
+        [getDataMaintenance.fulfilled]:(state,action)=>{
+            state.maintenance = action.payload
+        },
+        [getDataMaintenance.rejected]:(state,action)=>{
             state.error = action.payload
         },
     }

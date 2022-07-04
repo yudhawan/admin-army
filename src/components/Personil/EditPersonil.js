@@ -1,16 +1,14 @@
-import {ChevronLeftIcon,CameraIcon} from '@heroicons/react/outline'
+import {ChevronLeftIcon,CameraIcon,CheckCircleIcon,XCircleIcon} from '@heroicons/react/outline'
 import { useEffect, useRef, useState } from 'react'
 import {useDispatch,useSelector} from 'react-redux'
-import {getPersonil,updatePersonil} from '../../features/personilSlice'
+import {getPersonil,updatePersonil,resetStatus} from '../../features/personilSlice'
 import { getSatuan } from '../../features/catandlapSlice'
 import host from '../../features/host'
-function EditPersonil({handleEditshow,editshow}) {
+function EditPersonil({handleEditshow,satuan,person}) {
     const dispatch = useDispatch()
-    const file_bpjs = useRef(null)
-    const {personil,loading} = useSelector(state=>state.personil)
-    const {satuan} = useSelector(state=>state.catandlap)
-    const person= personil?.filter(val=>val.id===editshow.id)[0]
-    const [data,setdata] = useState({
+    const statusFetch = useSelector(state=>state.personil)
+    const [data,setdata] = useState(()=>{
+        return{
         id:person.id,
         nama:person.nama,
         pangkat:person.pangkat,
@@ -45,49 +43,54 @@ function EditPersonil({handleEditshow,editshow}) {
         riwayat_penyakit:person.riwayat_penyakit,
         stakes:person.stakes,
         riwayat_alergi:person.riwayat_alergi,
-        alamat:person.alamat,
+        alamat:person.alamat,}
     })
     const [validation,setvalidation] = useState('')
-    const [image,setimage] = useState(person.picture)
+    const [image,setimage] = useState(()=>person.picture)
     const [filebpjs,setfilebpjs] = useState(null)
     const [picture,setpicture]=useState(null)
     const img = useRef()
     function validatonForm(){
         if(data.nama==='') return setvalidation('Nama tidak boleh kosong')
         if(data.pangkat==='') return setvalidation('Pangkat tidak boleh kosong')
-        // if(data.nrp==='') return setvalidation('NRP tidak boleh kosong')
         if(data.nohp==='') return setvalidation('Nomor HP tidak boleh kosong')
         if(data.agama==='') return setvalidation('Agama tidak boleh kosong')
         if(data.gol_darah==='') return setvalidation('Golongan Darah tidak boleh kosong')
-        // if(data.sumber_ta==='') return setvalidation('Sumber TA tidak boleh kosong')
-        // if(data.suku==='') return setvalidation('Suku tidak boleh kosong')
         if(data.jabatan==='') return setvalidation('Jabatan tidak boleh kosong')
-        // if(data.tgl_lahir==='') return setvalidation('Tanggal Lahir tidak boleh kosong')
-        // if(data.pendidikan_umum==='') return setvalidation('Pendidikan Umum tidak boleh kosong')
-        // if(data.pendidikan_militer==='') return setvalidation('Pendidikan Militer tidak boleh kosong')
-        // if(data.dikbangpres==='') return setvalidation('Dikbang Presiden tidak boleh kosong')
         if(data.spes==='') return setvalidation('Spesialisasi tidak boleh kosong')
         if(data.infiltrasi==='') return setvalidation('Infiltrasi tidak boleh kosong')
-        // if(data.riwayat_jabatan==='') return setvalidation('Riwayat Jabatan tidak boleh kosong')
-        // if(data.riwayat_pangkat==='') return setvalidation('Riwayat Pangkat tidak boleh kosong')
-        // if(data.riwayat_penugasan_dn==='') return setvalidation('Riwayat Penugasan DN tidak boleh kosong')
-        // if(data.riwayat_penugasan_ln==='') return setvalidation('Riwayat Penugasan LN tidak boleh kosong')
-        // if(data.istri==='') return setvalidation('Istri tidak boleh kosong')
-        // if(data.anak==='') return setvalidation('Anak tidak boleh kosong')
-        // if(data.prestasi==='') return setvalidation('Prestasi tidak boleh kosong')
         if(data.status==='') return setvalidation('Status tidak boleh kosong')
         return submitForm()
     }
     function submitForm(){
         dispatch(updatePersonil({data:data,image:image,file:filebpjs}))
-        handleEditshow()
+        // handleEditshow()
     }
-    useEffect(()=>{
-        dispatch(getPersonil())
-        dispatch(getSatuan())
-    },[handleEditshow])
+       
+    if(statusFetch?.status==200){
+        setTimeout(()=>{
+            dispatch(resetStatus())
+            handleEditshow()
+        },2000)
+        return (
+        <div className='absolute left-0 top-0 backdrop-blur-md bg-transparent flex justify-center items-center w-full h-screen'>
+            <div className='w-60 h-60 rounded-xl bg-green-500 flex flex-col justify-center items-center space-y-2 relative'>
+                {/* <XCircleIcon className='text-white bg-red rounded-full absolute top-1 right-1 w-10 h-10' /> */}
+                <CheckCircleIcon className='text-white w-28 h-28' />
+                <p className='text-white font-bold text-xl'>Berhasil</p>
+            </div>
+        </div>)
+    }
   return (
+    <>
+    {statusFetch.loading&&<div className='absolute left-0 top-0 backdrop-blur-md bg-transparent flex justify-center items-center w-full h-screen'>
+            <div className='w-60 h-60 rounded-xl bg-green-500 flex flex-col justify-center items-center space-y-2 relative'>
+            <div className='w-40 h-40 rounded-full  border-t-white border-r-white border-4 animate-spin '></div>
+                <p className='text-white font-bold text-xl'>Loading ...</p>
+            </div>
+        </div>}
     <div className='flex flex-col w-full justify-start bg-white p-5 rounded-xl'>
+        
         <input  type='file' hidden name="image" accept="image/*" ref={img} onChange={(e)=>{
             setimage(e.target.files[0])
             let pic = URL.createObjectURL(e.target.files[0])
@@ -370,7 +373,7 @@ function EditPersonil({handleEditshow,editshow}) {
         {validation&&<div className='bg-rose-100 text-red py-1 px-2'>{validation}</div>}
         <button className='text-white bg-[#00a389] px-4 py-1 rounded-lg w-28 mt-5 self-end' onClick={()=>validatonForm()}>Simpan</button>
     </div>
-  )
+  </>)
 }
 
 export default EditPersonil

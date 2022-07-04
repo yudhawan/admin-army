@@ -1,4 +1,5 @@
 import { BrowserRouter as Router,Route, Routes } from "react-router-dom";
+
 import TabMenu from '../components/TabMenu';
 import Header from "../components/Header";
 import Home from './Home'
@@ -18,7 +19,9 @@ import Mrs from "./Mrs";
 import StaffPerencanaan from "./StaffPerencanaan";
 import StaffPersonil from "./StaffPersonil";
 import LaporanKekuatan from './LaporanKekuatan'
+
 function Main(){
+    
     return(
         <div className="lg:p-2 lg:flex lg:space-x-5 ">
             <Router>

@@ -2,6 +2,7 @@ import {HomeIcon,CollectionIcon,UserGroupIcon,DatabaseIcon,PresentationChartBarI
 import {useLocation, useNavigate} from 'react-router-dom';
 import { useEffect, useState } from 'react'
 import {useDispatch} from 'react-redux'
+import {resetPersonilPage} from '../features/personilSlice'
 import Logo from './logo2.png'
 import {logout} from '../features/authSlice'
 function TabMenu() {
@@ -12,6 +13,7 @@ function TabMenu() {
     const [setting,setsetting] = useState(false)
     const {pathname} = useLocation()
     useEffect(()=>{
+        if(pathname==='/personil') dispatch(resetPersonilPage())
         if(pathname==='/sintelijen' || pathname==='/soperasi' || pathname==='/slogistik' || pathname==='/mrs' || pathname==='/sperencanaan') setorganisasi(true)
         if(pathname==='/users' || pathname==='/database') setsetting(true)
     },[pathname])

@@ -1,9 +1,25 @@
 import {LightningBoltIcon,ClockIcon,DotsVerticalIcon,ArrowUpIcon} from '@heroicons/react/outline'
-import { useState } from 'react';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-function Maintenance() {
-    const [tgl,settgl] = useState(new Date());
+import { useState,useEffect } from 'react'
+import {getData,getDataMaintenance} from '../../features/materillSlice'
+import {useDispatch,useSelector} from 'react-redux'
+import Calendar from 'react-calendar'
+import 'react-calendar/dist/Calendar.css'
+function Maintenance({filterDate}) {
+    const dispatch = useDispatch()
+    const {materill,maintenance} = useSelector(state=>state.materill)
+    const [tgl,settgl] = useState(new Date())
+    const [marks,setmarks] = useState(null)
+    useEffect(()=>{
+        dispatch(getData())
+        dispatch(getDataMaintenance())
+        filterDate(tgl.getDate())
+        setmarks([...new Set(materill?.map(val=> {
+            const today = (val.waktu_perawatan<10)?'0'+val.waktu_perawatan:val.waktu_perawatan
+            let month = new Date().getMonth() + 1
+            if(month<10) month='0'+month
+            return today+'-'+month+'-'+new Date().getFullYear()
+        }))])
+    },[])
   return (
     <div className='flex w-full h-80 space-x-3 overflow-x-auto'>
         <div className='flex-col w-[35rem] bg-white rounded-xl p-4 space-y-3'>
@@ -27,6 +43,7 @@ function Maintenance() {
                 <div className='w-full border-gray-300 border-dashed border h-[1px] '></div>
             </div>
             <div className='flex-col space-y-3'>
+                {console.log(maintenance)}
                 <div className='flex justify-between items-center'>
                     <div className='flex space-x-2 items-center'>
                         <p className='text-xs text-gray-400 w-12'>2m ago</p>
@@ -85,8 +102,21 @@ function Maintenance() {
                 </div>
             </div>
         </div>
-        <div></div>
-        <div className='bg-white rounded-lg p-2 items-center flex w-[22rem] h-full'><Calendar className='w-full h-full' onChange={settgl} value={tgl} /></div>
+        
+        <div className='bg-white rounded-xl p-2 items-center flex w-[22rem] h-full'>
+            <Calendar className='w-full h-full rounded-xl' onChange={settgl} value={tgl} tileClassName={({ date, view }) => {
+                let today = date.getDate()
+                let month = date.getMonth()+1
+                if(date.getMonth()<10) month = '0'+month
+                if(date.getDate()<10) today='0'+today
+                const days = today+'-'+month+'-'+date.getFullYear()
+                if(marks?.find(x=>x===days)){
+                    return 'highlight'
+                }
+            }} 
+            
+            />
+        </div>
         <div className='flex-col space-y-4 flex items-center w-ful h-full'>
             <div className='rounded-full bg-white p-2 rotate-45 -z-10'><ArrowUpIcon className='text-gray-600 w-6 h-6' /></div>
             <div className='flex space-x-2'>
